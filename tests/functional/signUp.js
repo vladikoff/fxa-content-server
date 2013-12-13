@@ -20,7 +20,8 @@ define([
 
       return this.get('remote')
         .get(require.toUrl(url))
-        .waitForElementByTagName('h1')
+        //.waitForElementByTagName('h1')
+        .wait(1000)
 
         .elementByCssSelector('form input.email')
           .click()
@@ -36,7 +37,8 @@ define([
           .click()
         .end()
 
-        .waitForElementByCssSelector('.confirm h2')
+        //.waitForElementByCssSelector('.confirm h2')
+        .wait(5000)
         .elementByCssSelector('.confirm h2')
           .text()
           .then(function (resultText) {
