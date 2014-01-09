@@ -1,6 +1,6 @@
 {
   "processes": [
-    "server/bin/fxa-content-server.js"
+    "grunt server:dist"
   ],
   "env": {
     "CONFIG_FILES": "$HOME/code/server/config/awsbox.json,$HOME/config.json",
