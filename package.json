@@ -17,6 +17,7 @@
   "author": "Mozilla (https://mozilla.org/)",
   "license": "MPL 2.0",
   "dependencies": {
+    "bower": "1.2.8",
     "connect-cachify": "0.0.15",
     "convict": "0.4.0",
     "express": "3.3.4",
@@ -29,7 +30,6 @@
     "connect-fonts-clearsans": "0.0.1"
   },
   "devDependencies": {
-    "bower": "1.2.8",
     "awsbox": "0.6.2",
     "jshint": "0.9.1",
     "grunt": "~0.4.1",
