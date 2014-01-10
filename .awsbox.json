@@ -1,6 +1,6 @@
 {
   "processes": [
-    "grunt server:dist"
+    "node_modules/.bin/grunt server:dist"
   ],
   "env": {
     "CONFIG_FILES": "$HOME/code/server/config/awsbox.json,$HOME/config.json",
