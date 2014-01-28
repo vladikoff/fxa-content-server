@@ -7,21 +7,16 @@ module.exports = function (grunt) {
 
   grunt.config('requirejs', {
     dist: {
-      // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
       options: {
         almond: true,
+        name: 'main',
+        baseUrl: 'app/scripts',
+        mainConfigFile: 'app/scripts/config.js',
+        out: 'dist/scripts/main.js',
         replaceRequireScript: [{
-          files: ['<%= yeoman.dist %>/index.html'],
+          files: ['dist/index.html'],
           module: 'main'
-        }],
-        modules: [{name: 'main'}],
-        mainConfigFile: '<%= yeoman.app %>/scripts/main.js',
-        dir: '<%= yeoman.dist %>/scripts',
-        baseUrl: '<%= yeoman.app %>/scripts',
-        useStrict: true,
-        stubModules: ['text', 'stache'],
-        optimize: 'none',
-        wrap: true
+        }]
       }
     }
   });
