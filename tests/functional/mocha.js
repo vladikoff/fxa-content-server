@@ -11,7 +11,9 @@ define([
 ], function (intern, registerSuite, assert, config, require) {
   'use strict';
 
-  var url = intern.config.fxaContentRoot + 'tests/index.html?coverage';
+  var fxaAuthPath = intern.config.fxaAuthRoot.substring(0, intern.config.fxaAuthRoot.length - 3);
+  var url = intern.config.fxaContentRoot + 'tests/index.html?coverage&fxaAuthPath=' + fxaAuthPath;
+
   var bodyText;
 
   registerSuite({

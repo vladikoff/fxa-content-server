@@ -7,13 +7,16 @@
 
 define([
   'chai',
-  'lib/session'
+  'lib/session',
+  'mocks/mockLocalStorage'
 ],
-function (chai, Session) {
+function (chai, Session, mockLocalStorage) {
   var assert = chai.assert;
 
   describe('lib/session', function () {
     describe('set', function () {
+      // TODO: beforeEach
+      var session = new Session(mockLocalStorage);
       it('can take a key value pair', function () {
         Session.set('key', 'value');
         assert.equal(Session.key, 'value');

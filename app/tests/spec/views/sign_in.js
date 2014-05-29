@@ -99,7 +99,11 @@ function (chai, $, p, View, Session, AuthErrors, Metrics, WindowMock, RouterMock
     describe('submit', function () {
       it('redirects unverified users to the confirm page on success', function () {
         var password = 'password';
+        // TODO: mock out the client, mock sign up
         return view.fxaClient.signUp(email, password)
+        //return view.fxaClientMock.successSignUpMock(email, password)
+        //return new fxaClientMock.successSignUpMock(email, password)
+        //return view.fxaClientMock.throttleSignUpMock(email, password)
               .then(function () {
                 $('[type=email]').val(email);
                 $('[type=password]').val(password);

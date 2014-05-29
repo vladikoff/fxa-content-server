@@ -25,6 +25,7 @@ function (chai, $, View, Session, FxaClient, WindowMock, RouterMock, TestHelpers
     STATE = '123';
     SCOPE = 'profile:email';
     CLIENT_NAME = 'Awsy';
+    // TODO: ???
     BASE_REDIRECT_URL = 'http://127.0.0.1:8080/api/oauth';
 
     beforeEach(function () {
@@ -61,6 +62,9 @@ function (chai, $, View, Session, FxaClient, WindowMock, RouterMock, TestHelpers
     describe('submit', function () {
       it('signs the user in on success', function () {
         var password = 'password';
+        // TODO: mocked? integration test.
+        // just test the view works correctly?
+        // Mock out the client
         return view.fxaClient.signUp(email, password, { preVerified: true })
           .then(function () {
             $('.email').val(email);

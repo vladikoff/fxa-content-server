@@ -13,6 +13,7 @@ define([
   'lib/constants',
   'lib/assertion',
   'lib/fxa-client',
+  '../../lib/helpers',
   'vendor/jwcrypto',
   'vendor/jwcrypto/lib/algs/rs'
 ],
@@ -20,7 +21,7 @@ define([
 // fxa-content-server views. It wraps FxaClient to
 // take care of some app-specific housekeeping.
 function (chai, $, P,
-              Session, Constants, Assertion, FxaClientWrapper, jwcrypto) {
+              Session, Constants, Assertion, FxaClientWrapper, TestHelpers, jwcrypto) {
   /*global beforeEach, afterEach, describe, it*/
   var assert = chai.assert;
   var AUDIENCE = 'http://123done.org';
@@ -28,12 +29,13 @@ function (chai, $, P,
   var email;
   var password = 'password';
   var client;
+  var fxaAuthRoot = TestHelpers.getSearchParams('fxaAuthPath') || ISSUER;
 
   describe('lib/assertion', function () {
     beforeEach(function () {
       Session.clear();
       client = new FxaClientWrapper();
-      email = ' testuser' + Math.random() + '@testuser.com ';
+      email = ' testuserAssertion@testuser.com ';
       return client.signUp(email, password, { preVerified: true });
     });
 
@@ -52,7 +54,7 @@ function (chai, $, P,
           })
           .then(function() {
             var defer = P.defer();
-            $.getJSON(ISSUER + '/.well-known/browserid', function (data) {
+            $.getJSON(fxaAuthRoot + '/.well-known/browserid', function (data) {
               try {
                 assert.ok(data, 'Received .well-known data');
                 var fxaRootKey = jwcrypto.loadPublicKeyFromObject(data['public-key']);

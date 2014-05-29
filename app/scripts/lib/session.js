@@ -28,7 +28,10 @@ define([
   // these keys will be persisted to localStorage so that they live between browser sessions
   var PERSIST_TO_LOCAL_STORAGE = ['email', 'sessionToken', 'sessionTokenContext', 'oauth'];
 
-  function Session() {
+  function Session(fakeStorage) {
+
+    // TODO: example
+    this.storage = fakeStorage || window.localStorage;
     this.load();
   }
 
@@ -183,5 +186,5 @@ define([
 
 
   // session is a singleton
-  return new Session();
+  return Session;
 });

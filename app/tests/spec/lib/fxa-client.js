@@ -73,6 +73,7 @@ function (chai, $, ChannelMock, testHelpers,
           });
       });
 
+      // TODO: test Throttled error using the client, integration.
       it('a throttled signUp returns a THROTTLED error', function () {
         return client.signUp(email, password)
           .then(function () {

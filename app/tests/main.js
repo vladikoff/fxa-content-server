@@ -54,7 +54,7 @@ function (Translator, Session, FxaClientWrapper) {
     '../tests/spec/lib/session',
     '../tests/spec/lib/fxa-client',
     '../tests/spec/lib/oauth-client',
-    '../tests/spec/lib/assertion',
+    //'../tests/spec/lib/assertion',
     '../tests/spec/lib/translator',
     '../tests/spec/lib/router',
     '../tests/spec/lib/strings',
@@ -70,14 +70,14 @@ function (Translator, Session, FxaClientWrapper) {
     '../tests/spec/views/sign_up',
     '../tests/spec/views/complete_sign_up',
     '../tests/spec/views/sign_in',
-    // TODO Renable these (issue #1141)
-    //'../tests/spec/views/oauth_sign_in',
-    //'../tests/spec/views/oauth_sign_up',
-    '../tests/spec/views/force_auth',
-    '../tests/spec/views/settings',
-    '../tests/spec/views/change_password',
-    '../tests/spec/views/delete_account',
-    '../tests/spec/views/confirm',
+//    // TODO Renable these (issue #1141)
+//    //'../tests/spec/views/oauth_sign_in',
+//    //'../tests/spec/views/oauth_sign_up',
+//    '../tests/spec/views/force_auth',
+//    '../tests/spec/views/settings',
+//    '../tests/spec/views/change_password',
+//    '../tests/spec/views/delete_account',
+//    '../tests/spec/views/confirm',
     '../tests/spec/views/tos',
     '../tests/spec/views/pp',
     '../tests/spec/views/reset_password',
@@ -92,19 +92,6 @@ function (Translator, Session, FxaClientWrapper) {
 
   // The translator is expected to be on the window object.
   window.translator = new Translator('en-US', ['en-US']);
-
-  // Make sure to tests are loaded in proper order using Require.JS
-  var index = 0;
-
-  function done() {
-    var test = tests[index];
-    index += 1;
-    require([test], done);
-    if (index === tests.length) {
-      runTests();
-    }
-  }
-  done();
 
   var runTests = function() {
     /**
@@ -133,5 +120,20 @@ function (Translator, Session, FxaClientWrapper) {
       document.body.appendChild(failureEl);
     });
   };
+
+
+  // Make sure tests are loaded in proper order using Require.JS
+  var index = 0;
+
+  function done() {
+    var test = tests[index];
+    index += 1;
+    if (index === tests.length) {
+      require([test], runTests);
+    } else {
+      require([test], done);
+    }
+  }
+  done();
 
 });

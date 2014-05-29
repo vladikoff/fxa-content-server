@@ -98,6 +98,19 @@ define([
     return false;
   }
 
+  function getSearchParams(param)
+  {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == param){
+        return pair[1];
+      }
+    }
+    return(false);
+  }
+
   return {
     requiresFocus: requiresFocus,
     addFxaClientSpy: addFxaClientSpy,
@@ -106,6 +119,7 @@ define([
     createRandomHexString: createRandomHexString,
     createEmail: createEmail,
     emailToUser: emailToUser,
-    isEventLogged: isEventLogged
+    isEventLogged: isEventLogged,
+    getSearchParams: getSearchParams
   };
 });
