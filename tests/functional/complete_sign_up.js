@@ -157,7 +157,7 @@ define([
         .then(function () {
           assert.fail('resend link should not be present');
         }, function (err) {
-          assert.include(err.message, 'Failed to execute elementById("resend")');
+          assert.strictEqual(err.name, 'NoSuchElement');
           return true;
         })
         .end();

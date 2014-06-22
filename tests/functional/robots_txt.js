@@ -19,7 +19,7 @@ define([
 
       return this.get('remote')
         .get(require.toUrl(url))
-        .text()
+        .findByTagName('body').getVisibleText()
         .then(function(source) {
           assert.isTrue(/Disallow: \//g.test(source));
         })
