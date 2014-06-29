@@ -182,3 +182,7 @@ function (
 
   return Start;
 });
+
+var event = new CustomEvent('throwfail', { 'detail': 'wat' });
+dispatchEvent(event);
+

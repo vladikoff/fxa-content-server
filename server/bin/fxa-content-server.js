@@ -40,7 +40,6 @@ var routeLogging = require('../lib/logging/route_logging');
 var fourOhFour = require('../lib/404');
 var serverErrorHandler = require('../lib/500');
 var localizedRender = require('../lib/localized-render');
-var csp = require('../lib/csp');
 
 
 var STATIC_DIRECTORY =
@@ -70,12 +69,8 @@ function makeApp() {
   app.use(helmet.xframe('deny'));
   app.use(helmet.iexss());
   app.use(helmet.hsts(config.get('hsts_max_age'), true));
-  app.use(helmet.contentTypeOptions());
+//  app.use(helmet.contentTypeOptions());
 
-  // only send CSP headers in development mode
-  if (config.get('env') === 'development') {
-    app.use(csp);
-  }
 
   app.disable('x-powered-by');
 
