@@ -9,9 +9,10 @@ define([
   'p-promise',
   'views/sign_in',
   'lib/session',
+  'lib/url',
   'views/mixins/oauth-mixin'
 ],
-function (_, p, SignInView, Session, OAuthMixin) {
+function (_, p, SignInView, Session, Url, OAuthMixin) {
   var View = SignInView.extend({
     className: 'sign-in oauth-sign-in',
 
@@ -23,6 +24,11 @@ function (_, p, SignInView, Session, OAuthMixin) {
 
     beforeRender: function() {
       var self = this;
+
+      if (Url.searchParam('native', self.window.location.search)) {
+        Session.set('native', true);
+      }
+
       return p().then(function () {
           return SignInView.prototype.beforeRender.call(self);
         })

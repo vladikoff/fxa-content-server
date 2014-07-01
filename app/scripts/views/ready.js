@@ -18,11 +18,12 @@ define([
   'stache!templates/ready',
   'lib/session',
   'lib/xss',
+  'lib/url',
   'lib/strings',
   'views/mixins/oauth-mixin',
   'views/marketing_snippet'
 ],
-function (_, BaseView, FormView, Template, Session, Xss, Strings, OAuthMixin, MarketingSnippet) {
+function (_, BaseView, FormView, Template, Session, Xss, Url, Strings, OAuthMixin, MarketingSnippet) {
 
   var View = BaseView.extend({
     template: Template,
@@ -50,9 +51,13 @@ function (_, BaseView, FormView, Template, Session, Xss, Strings, OAuthMixin, Ma
       var serviceName = this.serviceName;
 
       if (this.serviceRedirectURI) {
-        serviceName = Strings.interpolate('<a href="%s" class="no-underline" id="redirectTo">%s</a>', [
-          Xss.href(this.serviceRedirectURI), serviceName
-        ]);
+        if (Url.searchParam('native', this.window.location.search) || Session.get('native')) {
+          serviceName = Strings.interpolate('%s', [ serviceName ]);
+        } else {
+          serviceName = Strings.interpolate('<a href="%s" class="no-underline" id="redirectTo">%s</a>', [
+            Xss.href(this.serviceRedirectURI), serviceName
+          ]);
+        }
       }
 
       return {

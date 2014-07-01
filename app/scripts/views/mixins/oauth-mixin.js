@@ -78,14 +78,13 @@ define([
         return self._oAuthClient.getCode(self._oAuthParams);
       })
       .then(function(result) {
-        console.log('finishOAuthFlow');
         Session.clear('oauth');
         // if native mode and the browser supports 'postMessage'
-        if (Url.searchParam('native', self.window.location.search) && self.window.postMessage) {
-          // TODO: parse code.
-          //self.window.postMessage(result.redirect, '*');
-          var event = new CustomEvent('message', { detail: result.redirect });
-          window.dispatchEvent(event);
+        if ((Url.searchParam('native', self.window.location.search) || Session.get('native'))
+              && self.window.postMessage) {
+          // TODO: set proper origin
+          Session.clear('native');
+          self.window.postMessage(result.redirect, '*');
         } else {
           // Redirect to the returned URL
           self.window.location.href = result.redirect;
