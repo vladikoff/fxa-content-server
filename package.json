@@ -78,7 +78,8 @@
     "grunt-todo": "0.2.3",
     "intern-geezer": "2.0.1",
     "jshint": "2.5.0",
-    "xmlhttprequest": "git://github.com/zaach/node-XMLHttpRequest.git#onerror"
+    "xmlhttprequest": "git://github.com/zaach/node-XMLHttpRequest.git#onerror",
+    "request": "2.39.0"
   },
   "engines": {
     "node": ">=0.10.0"
