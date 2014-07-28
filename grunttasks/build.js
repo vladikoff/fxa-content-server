@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     'copy:error_pages',
     'useminPrepare',
     'requirejs',
+    'concat:requirejs',
     'css',
     'concurrent:dist',
     'concat',
