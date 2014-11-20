@@ -71,7 +71,7 @@ define([
     teardown: function () {
       return FunctionalHelpers.clearBrowserState(this);
     },
-
+/*
     'go to avatars then avatar change': function () {
       return this.get('remote')
         .get(require.toUrl(AVATAR_URL))
@@ -210,7 +210,7 @@ define([
         // success is returning to the avatar change page
         .findById('avatar-options')
         .end();
-    },
+    },*/
 
     'upload a profile image': function () {
       return this.get('remote')
@@ -218,6 +218,9 @@ define([
 
         // go to change avatar
         .findById('imageLoader')
+        .end()
+
+        .findByCssSelector('.main-avatar')
         .end()
 
         .findById('file')
@@ -255,6 +258,9 @@ define([
 
         // go to change avatar
         .findById('imageLoader')
+        .end()
+
+        .findByCssSelector('.main-avatar')
         .end()
 
         .findById('file')
