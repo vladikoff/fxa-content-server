@@ -133,7 +133,6 @@ define([
         .end()
 
         .findByCssSelector('#fxa-age-year')
-          .click()
         .end()
 
         .findById('fxa-' + CUTOFF_YEAR)
@@ -175,7 +174,6 @@ define([
         .end()
 
         .findByCssSelector('#fxa-age-year')
-          .click()
         .end()
 
         .findById('fxa-' + CUTOFF_YEAR)
