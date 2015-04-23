@@ -5,9 +5,11 @@
 'use strict';
 
 var MetricsCollector = require('../metrics-collector-stderr');
+var StatsDCollector = require('../statsd-collector');
 
 module.exports = function () {
   var metricsCollector = new MetricsCollector();
+  var statsd = new StatsDCollector();
 
   return {
     method: 'post',
@@ -19,6 +21,9 @@ module.exports = function () {
       var metrics = req.body;
       metrics.agent = req.get('user-agent');
       metricsCollector.write(req.body);
+
+      // send the metrics body to the StatsD collector for processing
+        statsd.send(req.body);
     }
   };
 };
