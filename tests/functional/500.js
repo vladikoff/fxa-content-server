@@ -10,17 +10,17 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.fxaContentRoot + 'boom';
+  var url = intern.executor.config.fxaContentRoot + 'boom';
 
   registerSuite({
     name: '500',
 
     'visit an invalid page': function () {
-      var expected = intern.config.fxaProduction ? 'fxa-404-home' : 'fxa-500-home';
+      var expected = intern.executor.config.fxaProduction ? 'fxa-404-home' : 'fxa-500-home';
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findById(expected)
           .click()
         .end()

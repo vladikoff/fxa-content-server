@@ -16,7 +16,7 @@ define([
 
   // This test cannot be run remotely like the other tests in tests/server. So,
   // if production, just skip these tests (register a suite with no tests).
-  if (intern.config.fxaProduction) {
+  if (intern.executor.config.fxaProduction) {
     registerSuite(suite);
     return;
   }

@@ -20,7 +20,7 @@ define([
   var listenForFxaCommands = FxDesktopHelpers.listenForFxaCommands;
   var testIsBrowserNotifiedOfLogin = FxDesktopHelpers.testIsBrowserNotifiedOfLogin;
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var SIGNIN_URL = config.fxaContentRoot + 'signin';
   var SETTINGS_URL = config.fxaContentRoot + 'settings';
@@ -55,9 +55,9 @@ define([
     },
 
     'sign in, go to settings, sign out': function () {
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(SIGNIN_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('form input.email')
           .click()
           .type(email)
@@ -84,9 +84,9 @@ define([
 
     'sign in to desktop context, go to settings, no way to sign out': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(SIGNIN_URL + '?context=' + Constants.FX_DESKTOP_CONTEXT))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('form input.email')
@@ -128,7 +128,7 @@ define([
           return client.passwordChange(email, FIRST_PASSWORD, SECOND_PASSWORD);
         })
         .then(function () {
-          return self.get('remote')
+          return self.remote
             .get(require.toUrl(SETTINGS_URL))
             // Expect to get redirected to sign in since the sessionToken is invalid
             .findById('fxa-signin-header')
@@ -199,9 +199,9 @@ define([
 
     'sign in with setting param set to avatar redirects to avatar change page ': function () {
       var self = this;
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNIN_URL + '?setting=avatar'))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .then(function () {
           return FunctionalHelpers.fillOutSignIn(self, email, FIRST_PASSWORD);
         })
@@ -211,9 +211,9 @@ define([
 
     'sign in with setting param and additional params redirects to avatar change page ': function () {
       var self = this;
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNIN_URL + '?setting=avatar&uid=' + accountData.uid + '&email=' + email))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .then(function () {
           return FunctionalHelpers.fillOutSignIn(self, email, FIRST_PASSWORD);
         })
@@ -247,9 +247,9 @@ define([
     'visit settings page with an unverified account redirects to confirm': function () {
       var self = this;
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNIN_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('form input.email')
           .click()
           .type(email)

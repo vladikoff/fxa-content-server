@@ -13,7 +13,7 @@ define([
 ], function (intern, registerSuite, assert, nodeXMLHttpRequest, FxaClient, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var CUTOFF_YEAR = new Date().getFullYear() - 13;
 

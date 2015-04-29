@@ -10,8 +10,8 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.fxaContentRoot + 'signin';
-  var nonFiraUrl = intern.config.fxaContentRoot + 'zh-CN/legal/privacy';
+  var url = intern.executor.config.fxaContentRoot + 'signin';
+  var nonFiraUrl = intern.executor.config.fxaContentRoot + 'zh-CN/legal/privacy';
 
   registerSuite({
     name: 'fonts',
@@ -21,9 +21,9 @@ define([
 
     'Uses Fira for en': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
         .findByCssSelector('#fxa-signin-header')
           .getComputedStyle('font-family')
@@ -42,7 +42,7 @@ define([
 
     'Does not use Fira for non-supported locale': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(nonFiraUrl))
 
         .findByCssSelector('#fxa-pp-header')

@@ -9,14 +9,13 @@ define([
   'require',
   'intern/node_modules/dojo/node!xmlhttprequest',
   'app/bower_components/fxa-js-client/fxa-client',
-  'intern/node_modules/dojo/Deferred',
   'tests/lib/restmail',
   'tests/lib/helpers',
   'tests/functional/lib/helpers'
-], function (intern, registerSuite, assert, require, nodeXMLHttpRequest, FxaClient, Deferred, restmail, TestHelpers, FunctionalHelpers) {
+], function (intern, registerSuite, assert, require, nodeXMLHttpRequest, FxaClient, restmail, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var FORCE_AUTH_URL = config.fxaContentRoot + 'force_auth';
 
@@ -25,8 +24,8 @@ define([
   var client;
 
   function openFxa(self, email) {
-    return self.get('remote')
-      .setFindTimeout(intern.config.pageLoadTimeout)
+    return self.remote
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
       .get(require.toUrl(FORCE_AUTH_URL + '?email=' + email))
 
       .findByCssSelector('#fxa-force-auth-header')
@@ -34,7 +33,7 @@ define([
   }
 
   function attemptSignIn(self) {
-    return self.get('remote')
+    return self.remote
       // user should be at the force-auth screen
       .findByCssSelector('#fxa-force-auth-header')
       .end()

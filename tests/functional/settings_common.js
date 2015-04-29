@@ -16,7 +16,7 @@ define([
       FxaClient, Constants, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var SETTINGS_URL = config.fxaContentRoot + 'settings';
   var SIGNIN_URL = config.fxaContentRoot + 'signin';
@@ -112,7 +112,7 @@ define([
           return client.passwordChange(email, FIRST_PASSWORD, SECOND_PASSWORD);
         })
         .then(function () {
-          return self.get('remote')
+          return self.remote
             .get(require.toUrl(url))
             // Expect to get redirected to sign in since the sessionToken is invalid
             .findById('fxa-signin-header')
@@ -123,9 +123,9 @@ define([
     suite['visit settings' + page + ' with an unknown uid parameter redirects to signin'] = function () {
       var self = this;
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNIN_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .then(function () {
           return FunctionalHelpers.fillOutSignIn(self, email, FIRST_PASSWORD);
         })
@@ -141,9 +141,9 @@ define([
     suite['visit settings' + page + ' with a known uid does not redirect'] = function () {
       var self = this;
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNIN_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .then(function () {
           return FunctionalHelpers.fillOutSignIn(self, email, FIRST_PASSWORD);
         })

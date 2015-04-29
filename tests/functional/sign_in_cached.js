@@ -22,7 +22,7 @@ define([
   var FX_DESKTOP_CONTEXT = Constants.FX_DESKTOP_CONTEXT;
   var listenForFxaCommands = FxDesktopHelpers.listenForFxaCommands;
 
-  var config = intern.config;
+  var config = intern.executor.config;
 
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   // The automatedBrowser query param tells signin/up to stub parts of the flow
@@ -45,7 +45,7 @@ define([
 
   function waitForDesktopLogin(context, redirect) {
     // This will listen for the login event triggered by the submit below
-    return context.get('remote')
+    return context.remote
       .execute(function (URL) {
         /* global addEventListener,window,sessionStorage */
         addEventListener('FirefoxAccountsCommand', function (e) {
@@ -88,7 +88,7 @@ define([
     'sign in twice, on second attempt email will be cached': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN))
         .findByCssSelector('form input.email')
         .click()
@@ -130,9 +130,9 @@ define([
     'sign in first in sync context, on second attempt credentials will be cached': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN_DESKTOP))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('form input.email')
@@ -163,7 +163,7 @@ define([
     },
 
     'sign in once, use a different account': function () {
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN))
         .findByCssSelector('form input.email')
         .click()
@@ -233,9 +233,9 @@ define([
     'sign in with cached credentials but with an expired session': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN_DESKTOP))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         // signin normally, nothing in session yet
@@ -303,9 +303,9 @@ define([
       var email = TestHelpers.createEmail();
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNUP_DESKTOP))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('form input.email')
@@ -351,7 +351,7 @@ define([
     'unverified cached signin redirects to confirm email': function () {
       var email = TestHelpers.createEmail();
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNUP))
         .findByCssSelector('form input.email')
         .clearValue()
@@ -398,9 +398,9 @@ define([
     'sign in on desktop then sign in with prefill does not show picker': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN_DESKTOP))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('form input.email')
@@ -469,9 +469,9 @@ define([
     'sign in with desktop context then no context, desktop credentials should not persist': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN_DESKTOP))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('form input.email')
@@ -540,7 +540,7 @@ define([
     'overrule cached credentials': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_SIGNIN))
         .findByCssSelector('form input.email')
           .click()

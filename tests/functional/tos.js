@@ -12,8 +12,8 @@ define([
 ], function (intern, registerSuite, assert, FunctionalHelpers, Test, require) {
   'use strict';
 
-  var PAGE_URL = intern.config.fxaContentRoot + 'legal/terms';
-  var SIGNUP_URL = intern.config.fxaContentRoot + 'signup';
+  var PAGE_URL = intern.executor.config.fxaContentRoot + 'legal/terms';
+  var SIGNUP_URL = intern.executor.config.fxaContentRoot + 'signup';
 
   registerSuite({
     name: 'tos',
@@ -24,9 +24,9 @@ define([
 
     'start at signup': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(SIGNUP_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('#fxa-tos')
           .click()
         .end()
@@ -42,10 +42,10 @@ define([
 
     'browse directly to page - no back button': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
 
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
         .findById('fxa-tos-header')
         .end()
@@ -54,10 +54,10 @@ define([
     },
 
     'refresh, back button is available': function () {
-      return this.get('remote')
+      return this.remote
 
         .get(require.toUrl(SIGNUP_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('#fxa-tos')
           .click()
         .end()

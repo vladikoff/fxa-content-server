@@ -17,7 +17,7 @@ define([
         FxaClient, restmail, TestHelpers, FunctionalHelpers, FxDesktopHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var PAGE_URL = config.fxaContentRoot + 'reset_password?context=fx_desktop_v1&service=sync';
 
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
@@ -67,9 +67,9 @@ define([
       var self = this;
 
       // verify account
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('#fxa-reset-password-header')
@@ -123,9 +123,9 @@ define([
     'password reset, verify same browser with original tab closed': function () {
       var self = this;
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .then(function () {
@@ -162,9 +162,9 @@ define([
     'password reset, verify same browser by replacing the original tab': function () {
       var self = this;
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .then(function () {
@@ -178,7 +178,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .then(function () {
@@ -194,9 +194,9 @@ define([
       var self = this;
 
       // verify account
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
 
@@ -244,9 +244,9 @@ define([
       var self = this;
 
       // verify account
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
 
@@ -267,7 +267,7 @@ define([
           return FunctionalHelpers.getVerificationLink(user, 0);
         })
         .then(function (url) {
-          return self.get('remote').get(require.toUrl(url));
+          return self.remote.get(require.toUrl(url));
         })
         .end()
 

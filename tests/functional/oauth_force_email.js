@@ -14,7 +14,7 @@ define([
 ], function (intern, registerSuite, assert, require, nodeXMLHttpRequest, FxaClient, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var OAUTH_APP = config.fxaOauthApp;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
 
@@ -28,7 +28,7 @@ define([
   }
 
   function attemptSignIn(self) {
-    return self.get('remote')
+    return self.remote
       // user should be at the force-auth screen
       .findByCssSelector('#fxa-force-auth-header')
       .end()

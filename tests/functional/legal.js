@@ -10,7 +10,7 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.fxaContentRoot + 'legal';
+  var url = intern.executor.config.fxaContentRoot + 'legal';
 
   registerSuite({
     name: 'legal',
@@ -20,9 +20,9 @@ define([
 
     'start at legal page': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('a[href="/legal/terms"]')
           .click()
         .end()
@@ -47,7 +47,7 @@ define([
 
     'start at terms page': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url + '/terms'))
 
         .findByCssSelector('#main-content')
@@ -64,7 +64,7 @@ define([
 
     'start at privacy page': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url + '/privacy'))
 
         .findByCssSelector('#main-content')

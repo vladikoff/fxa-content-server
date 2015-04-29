@@ -7,15 +7,17 @@ define([
   'intern!object',
   'intern/chai!assert',
   'intern/dojo/node!../../server/lib/configuration',
-  'intern/dojo/Deferred',
+  'intern/dojo/Promise',
   'require',
   'intern/node_modules/dojo/has!host-node?intern/node_modules/dojo/node!child_process'
-], function (intern, registerSuite, assert, config, Deferred, require, child_process) {
+], function (intern, registerSuite, assert, config, Promise, require, child_process) {
   'use strict';
+
+
 
   /* global process */
   var travis = process && process.env.TRAVIS_COMMIT;
-  var url = intern.config.fxaContentRoot + 'tests/index.html?coverage';
+  var url = intern.executor.config.fxaContentRoot + 'tests/index.html?coverage';
   if (travis) {
     url += '&travis=true';
   }
@@ -30,7 +32,7 @@ define([
       // timeout after 300 seconds
       this.timeout = 300000;
 
-      return this.get('remote')
+      return this.remote
         .setFindTimeout(this.timeout)
         .get(require.toUrl(url))
         .refresh()
@@ -72,11 +74,11 @@ define([
    * @returns {Deferred}
    */
   function sendCoverageToCoveralls(context) {
-    var dfd = new Deferred();
+    var dfd = new Promise.Deferred();
     var spawn = child_process.spawn;
 
     console.log('Sending code coverage to coveralls.io');
-    context.get('remote')
+    context.remote
       // get code coverage data
       .execute(function () {
         /* global window */
@@ -108,11 +110,11 @@ define([
    * @returns {Deferred}
    */
   function validateCoverageLocally(context) {
-    var dfd = new Deferred();
+    var dfd = new Promise.Deferred();
 
     console.log('Validating code coverage...');
     context
-      .get('remote')
+      .remote
       .findByCssSelector('.grand-total .rs')
       .getVisibleText()
       .then(function (text) {

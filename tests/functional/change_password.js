@@ -16,7 +16,7 @@ define([
       FxaClient, TestHelpers, FunctionalHelpers, Test) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var SIGNIN_URL = config.fxaContentRoot + 'signin';
   var PAGE_URL = config.fxaContentRoot + 'change_password';
@@ -29,7 +29,7 @@ define([
   var ANIMATION_DELAY_MS = 500;
 
   function initiateLockedAccountChangePassword(context) {
-    return context.get('remote')
+    return context.remote
       .get(require.toUrl(PAGE_URL))
 
       .findByCssSelector('#fxa-change-password-header')
@@ -64,8 +64,8 @@ define([
       var self = this;
       return client.signUp(email, FIRST_PASSWORD, { preVerified: true })
         .then(function () {
-          return self.get('remote')
-            .setFindTimeout(intern.config.pageLoadTimeout);
+          return self.remote
+            .setFindTimeout(intern.executor.config.pageLoadTimeout);
         })
         .then(function () {
           return FunctionalHelpers.clearBrowserState(self);
@@ -83,7 +83,7 @@ define([
 
     'sign in, try to change password with an incorrect old password': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
 
         // Go to change password screen
         .findByCssSelector('#change-password')
@@ -137,7 +137,7 @@ define([
 
     'sign in, change password, sign in with new password': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
 
         // Go to change password screen
         .findByCssSelector('#change-password')
@@ -175,7 +175,7 @@ define([
 
     'browse directly to page - no back button': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
         // check that signin is complete before proceeding
         .findByCssSelector('#fxa-settings-header')
         .end()
@@ -194,7 +194,7 @@ define([
     },
 
     'refresh the page - back button': function () {
-      return this.get('remote')
+      return this.remote
         // check that signin is complete before proceeding
         .findByCssSelector('#fxa-settings-header')
         .end()
@@ -271,7 +271,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .findByCssSelector('#fxa-account-unlock-complete-header')
@@ -308,7 +308,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         // new browser dead ends at the 'account verified' screen.

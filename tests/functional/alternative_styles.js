@@ -11,8 +11,8 @@ define([
 ], function (intern, registerSuite, FunctionalHelpers, Test, require) {
   'use strict';
 
-  var INVALID_CHROMELESS_URL = intern.config.fxaContentRoot + 'signup?style=chromeless';
-  var CHROMELESS_IFRAME_SYNC_URL = intern.config.fxaContentRoot + 'signup?service=sync&context=iframe&style=chromeless';
+  var INVALID_CHROMELESS_URL = intern.executor.config.fxaContentRoot + 'signup?style=chromeless';
+  var CHROMELESS_IFRAME_SYNC_URL = intern.executor.config.fxaContentRoot + 'signup?service=sync&context=iframe&style=chromeless';
 
   registerSuite({
     name: 'alternate styles',
@@ -23,9 +23,9 @@ define([
 
     'the `chromeless` style is not applied if not iframed sync': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(INVALID_CHROMELESS_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('#fxa-signup-header')
         .end()
 
@@ -36,9 +36,9 @@ define([
 
     'the `chromeless` style can be applied to an iframed sync': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(CHROMELESS_IFRAME_SYNC_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('#fxa-signup-header')
         .end()
 

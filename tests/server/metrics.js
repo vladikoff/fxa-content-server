@@ -11,17 +11,17 @@ define([
 ], function (intern, registerSuite, assert, config, request) {
   'use strict';
 
-  var serverUrl = intern.config.fxaContentRoot.replace(/\/$/, '');
+  var serverUrl = intern.executor.config.fxaContentRoot.replace(/\/$/, '');
 
   // IMHO, metrics should be enabled in dev too.
-  var metricsSampleRate = intern.config.fxaProduction ? 0.1 : config.get('metrics.sample_rate');
+  var metricsSampleRate = intern.executor.config.fxaProduction ? 0.1 : config.get('metrics.sample_rate');
 
   var suite = {
     name: 'metrics'
   };
 
   suite['#get /config returns a `metricsSampleRate`'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/config',
     dfd.callback(function (err, res) {
@@ -32,7 +32,7 @@ define([
   };
 
   suite['#post /metrics - returns 200, all the time'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request.post(serverUrl + '/metrics', {
       data: {

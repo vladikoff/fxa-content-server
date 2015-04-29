@@ -21,7 +21,7 @@ define([
         FxaClient, restmail, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var IFRAME_OAUTH_APP = config.fxaIframeOauthApp;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
 
@@ -36,9 +36,9 @@ define([
   var email;
   var client;
   function openFxaFromRp(context, page) {
-    return context.get('remote')
+    return context.remote
       .get(require.toUrl(IFRAME_OAUTH_APP))
-      .setFindTimeout(intern.config.pageLoadTimeout)
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('#splash .' + page)
         .click()
@@ -47,7 +47,7 @@ define([
       .findByCssSelector('#fxa')
       .then(function (el, setContext) {
         // update the context to use the frame.
-        return setContext(context.get('remote').switchToFrame(el));
+        return setContext(context.remote.switchToFrame(el));
       })
 
       .findByCssSelector('#fxa-' + page + '-header')
@@ -202,7 +202,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .findByCssSelector('#fxa-sign-up-complete-header')
@@ -252,7 +252,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         // new browser dead ends at the 'account verified' screen.
@@ -387,7 +387,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .then(function () {
@@ -475,7 +475,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .then(function () {

@@ -10,7 +10,7 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.fxaContentRoot;
+  var url = intern.executor.config.fxaContentRoot;
 
   var pages = [
     'v1/complete_reset_password',
@@ -66,9 +66,9 @@ define([
 
   var visitFn = function (path) {
     return function () {
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url + path))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('#stage header')
         .end();
     };

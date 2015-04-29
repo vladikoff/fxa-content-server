@@ -14,7 +14,7 @@ define([
 
   function noElementByCssSelector(context, selector) {
     return function () {
-      return context.get('remote')
+      return context.remote
         .setFindTimeout(0)
 
         .findByCssSelector(selector)
@@ -23,7 +23,7 @@ define([
           })
         .end()
 
-        .setFindTimeout(intern.config.pageLoadTimeout);
+        .setFindTimeout(intern.executor.config.pageLoadTimeout);
     };
   }
 

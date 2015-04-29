@@ -15,7 +15,7 @@ define([
 ], function (intern, registerSuite, assert, config, request) {
   'use strict';
 
-  var serverUrl = intern.config.fxaContentRoot.replace(/\/$/, '');
+  var serverUrl = intern.executor.config.fxaContentRoot.replace(/\/$/, '');
 
   var suite = {
     name: 'i18n'
@@ -23,7 +23,7 @@ define([
 
   function testClientJson(acceptLanguageHeader, expectedLanguage) {
     /*jshint validthis: true*/
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     var headers = {};
     if (acceptLanguageHeader) {
@@ -48,7 +48,7 @@ define([
       //
       assert.ok(res.headers.vary, 'the vary header exists');
       var varyHeader = res.headers.vary.toLowerCase().split(/,\s*/);
-      if (intern.config.fxaProduction) {
+      if (intern.executor.config.fxaProduction) {
         if (process.versions['node'] < '0.11.11') {
           assert.ok(varyHeader.indexOf('accept-encoding') !== -1);
         } else {
@@ -69,7 +69,7 @@ define([
 
   function testExpectHTMLResponse(url, acceptHeader) {
     /*jshint validthis: true*/
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     var headers = {};
 
@@ -85,7 +85,7 @@ define([
   }
 
   suite['#get /config'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/config', {
       headers: {
@@ -107,7 +107,7 @@ define([
   };
 
   suite['#get /config should return language not locale'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/config', {
       headers: {
@@ -124,7 +124,7 @@ define([
   // Test each server template based page
   ['/', '/non-existent', '/boom', '/legal/terms', '/legal/privacy'].forEach(function (page) {
     suite['#get page ' + page + ' has correct localized resources'] = function () {
-      var dfd = this.async(intern.config.asyncTimeout);
+      var dfd = this.async(intern.executor.config.asyncTimeout);
 
       request(serverUrl + page, {
         headers: {
@@ -133,7 +133,7 @@ define([
         }
       }, dfd.callback(function (err, res) {
         var re = /styles\/en\.css/;
-        if (intern.config.fxaProduction) {
+        if (intern.executor.config.fxaProduction) {
           re = /styles\/[a-f0-9]{0,8}\.en\.css/;
         }
         assert.ok(res.body.match(re));
@@ -146,7 +146,7 @@ define([
   // Test against Hebrew, a rtl langauge that must use system fonts
   ['/', '/non-existent', '/boom'].forEach(function (page) {
     suite['#get page ' + page + ' has correct localized resources for he locale'] = function () {
-      var dfd = this.async(intern.config.asyncTimeout);
+      var dfd = this.async(intern.executor.config.asyncTimeout);
 
       request(serverUrl + page, {
         headers: {
@@ -155,7 +155,7 @@ define([
         }
       }, dfd.callback(function (err, res) {
         var re = /styles\/system-font-main\.css/;
-        if (intern.config.fxaProduction) {
+        if (intern.executor.config.fxaProduction) {
           re = /styles\/[a-f0-9]{0,8}\.he\.css/;
         }
         assert.ok(res.body.match(re));
@@ -166,7 +166,7 @@ define([
   });
 
   suite['#get terms page using lang in the URL'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/zh-CN/legal/terms', {
       headers: {
@@ -174,7 +174,7 @@ define([
       }
     }, dfd.callback(function (err, res) {
       var re = /styles\/system-font-main\.css/;
-      if (intern.config.fxaProduction) {
+      if (intern.executor.config.fxaProduction) {
         re = /styles\/[a-f0-9]{0,8}\.zh_CN\.css/;
       }
       assert.ok(re);
@@ -193,7 +193,7 @@ define([
 
 
   suite['#get privacy page using lang in the URL'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/zh-CN/legal/privacy', {
       headers: {
@@ -201,7 +201,7 @@ define([
       }
     }, dfd.callback(function (err, res) {
       var re = /styles\/system-font-main\.css/;
-      if (intern.config.fxaProduction) {
+      if (intern.executor.config.fxaProduction) {
         re = /styles\/[a-f0-9]{0,8}\.zh_CN\.css/;
       }
       assert.ok(re);
@@ -211,7 +211,7 @@ define([
   };
 
   suite['#get privacy page with supported lang that has no privacy template should show en'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/legal/privacy', {
       headers: {
@@ -288,7 +288,7 @@ define([
   // this is a basic test to ensure the original strings are replaced
   // in dev mode and the templates do not render without text.
   suite['#get /503.html page - check text is rendered in dev mode'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/503.html', {
       headers: {

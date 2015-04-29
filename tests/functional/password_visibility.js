@@ -11,7 +11,7 @@ define([
 ], function (intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var SIGNIN_URL = config.fxaContentRoot + 'signin';
   var SYNC_SIGNIN_URL = config.fxaContentRoot + 'signin?service=sync&context=fx_desktop_v1';
 
@@ -27,7 +27,7 @@ define([
     },
 
     'toggle show password for normal RP': function () {
-      this.get('remote').get(require.toUrl(SIGNIN_URL))
+      this.remote.get(require.toUrl(SIGNIN_URL))
         .findByCssSelector('#fxa-signin-header')
         .end()
 
@@ -72,7 +72,7 @@ define([
     },
 
     'toggle show password for Sync': function () {
-      this.get('remote').get(require.toUrl(SYNC_SIGNIN_URL))
+      this.remote.get(require.toUrl(SYNC_SIGNIN_URL))
         .findByCssSelector('#fxa-signin-header')
         .end()
 

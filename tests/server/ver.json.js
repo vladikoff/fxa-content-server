@@ -11,14 +11,14 @@ define([
 ], function (intern, registerSuite, assert, config, request) {
   'use strict';
 
-  var serverUrl = intern.config.fxaContentRoot.replace(/\/$/, '');
+  var serverUrl = intern.executor.config.fxaContentRoot.replace(/\/$/, '');
 
   var suite = {
     name: 'ver.json'
   };
 
   suite['#get ver.json'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/ver.json', dfd.callback(function (err, res) {
       assert.equal(res.statusCode, 200);

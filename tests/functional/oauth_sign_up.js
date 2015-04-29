@@ -15,7 +15,7 @@ define([
 ], function (intern, registerSuite, assert, require, nodeXMLHttpRequest, FxaClient, restmail, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var SIGNUP_ROOT = config.fxaContentRoot + 'oauth/signup';
   var TOO_YOUNG_YEAR = new Date().getFullYear() - 13;
   var OLD_ENOUGH_YEAR = TOO_YOUNG_YEAR - 1;
@@ -48,19 +48,19 @@ define([
     },
 
     'with missing client_id': function () {
-      return this.get('remote').get(require.toUrl(SIGNUP_ROOT + '?scope=profile'))
+      return this.remote.get(require.toUrl(SIGNUP_ROOT + '?scope=profile'))
         .findByCssSelector('#fxa-400-header')
         .end();
     },
 
     'with missing scope': function () {
-      return this.get('remote').get(require.toUrl(SIGNUP_ROOT + '?client_id=client_id'))
+      return this.remote.get(require.toUrl(SIGNUP_ROOT + '?client_id=client_id'))
         .findByCssSelector('#fxa-400-header')
         .end();
     },
 
     'with invalid client_id': function () {
-      return this.get('remote').get(require.toUrl(SIGNUP_ROOT + '?client_id=invalid_client_id&scope=profile'))
+      return this.remote.get(require.toUrl(SIGNUP_ROOT + '?client_id=invalid_client_id&scope=profile'))
         .findByCssSelector('#fxa-400-header')
         .end();
     },
@@ -161,7 +161,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .findByCssSelector('#loggedin')
@@ -211,7 +211,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         // new browser dead ends at the 'account verified' screen.

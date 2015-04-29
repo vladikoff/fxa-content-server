@@ -15,7 +15,7 @@ define([
 ], function (intern, registerSuite, assert, require, nodeXMLHttpRequest, FxaClient, restmail, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var PAGE_URL = config.fxaContentRoot + 'signin';
   var PASSWORD = 'password';
@@ -183,9 +183,9 @@ define([
     var email = TestHelpers.createEmail();
     var password = '12345678';
 
-    return self.get('remote')
+    return self.remote
       .get(require.toUrl(PAGE_URL))
-      .setFindTimeout(intern.config.pageLoadTimeout)
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('input[type=email]')
         .clearValue()

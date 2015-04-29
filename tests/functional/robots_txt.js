@@ -10,16 +10,16 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.fxaContentRoot + 'robots.txt';
+  var url = intern.executor.config.fxaContentRoot + 'robots.txt';
 
   registerSuite({
     name: 'robots.txt',
 
     'should disallow root': function () {
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByTagName('body')
         .getVisibleText()
         .then(function (source) {

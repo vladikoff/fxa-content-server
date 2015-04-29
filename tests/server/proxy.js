@@ -19,7 +19,7 @@ define([
 
   // At this time, proxy is not enabled in production or stage. So
   // skip the tests (register a suite with no tests yet).
-  if (intern.config.fxaProduction) {
+  if (intern.executor.config.fxaProduction) {
     registerSuite(suite);
     return;
   }

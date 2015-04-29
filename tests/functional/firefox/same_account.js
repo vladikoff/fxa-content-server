@@ -12,7 +12,7 @@ define([
 ], function (intern, registerSuite, assert, require, restmail, TestHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var EMAIL_SERVER_ROOT = config.fxaEmailRoot;
   var PASSWORD = 'password';
   var TOO_YOUNG_YEAR = new Date().getFullYear() - 13;
@@ -39,8 +39,8 @@ define([
        * Part 1: Sign up
        */
 
-      return self.get('remote')
-        .setFindTimeout(intern.config.pageLoadTimeout)
+      return self.remote
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         // open Firefox preferences
         .get(require.toUrl('about:preferences'))
         .findById('header-general')
@@ -100,7 +100,7 @@ define([
             .then(function (emails) {
               var emailLink = emails[0].headers['x-link'];
 
-              return self.get('remote').execute(function (emailLink) {
+              return self.remote.execute(function (emailLink) {
                 /* global window */
                 window.open(emailLink, 'newwindow');
 

@@ -11,14 +11,14 @@ define([
 ], function (intern, registerSuite, assert, config, request) {
   'use strict';
 
-  var serverUrl = intern.config.fxaContentRoot.replace(/\/$/, '');
+  var serverUrl = intern.executor.config.fxaContentRoot.replace(/\/$/, '');
 
   var suite = {
     name: 'cookies disabled'
   };
 
   suite['#get /config without cookies returns `cookiesEnabled=false`'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/config', {
       headers: {
@@ -36,7 +36,7 @@ define([
   };
 
   suite['#get /config with cookies returns `cookiesEnabled=true`'] = function () {
-    var dfd = this.async(intern.config.asyncTimeout);
+    var dfd = this.async(intern.executor.config.asyncTimeout);
 
     request(serverUrl + '/config', {
       headers: {

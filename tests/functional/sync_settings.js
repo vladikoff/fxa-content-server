@@ -26,7 +26,7 @@ define([
   var fillOutChangePassword = FunctionalHelpers.fillOutChangePassword;
   var fillOutDeleteAccount = FunctionalHelpers.fillOutDeleteAccount;
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var SIGNIN_URL = config.fxaContentRoot + 'signin?context=fx_desktop_v1&service=sync';
   var SETTINGS_URL = config.fxaContentRoot + 'settings?context=fx_desktop_v1&service=sync';
@@ -53,9 +53,9 @@ define([
           return clearBrowserState(self);
         })
         .then(function () {
-          return self.get('remote')
+          return self.remote
             .get(require.toUrl(SIGNIN_URL))
-            .setFindTimeout(intern.config.pageLoadTimeout)
+            .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
             .execute(listenForFxaCommands)
 
@@ -68,7 +68,7 @@ define([
             })
 
             .get(require.toUrl(SETTINGS_URL))
-            .setFindTimeout(intern.config.pageLoadTimeout)
+            .setFindTimeout(intern.executor.config.pageLoadTimeout)
             .execute(listenForFxaCommands);
         });
     },
@@ -80,7 +80,7 @@ define([
     'sign in, change the password': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
 
         .findByCssSelector('#change-password')
           .click()
@@ -101,7 +101,7 @@ define([
     'sign in, delete the account': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
 
         .findByCssSelector('#delete-account')
           .click()

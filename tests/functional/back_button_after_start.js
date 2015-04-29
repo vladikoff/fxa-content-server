@@ -11,16 +11,16 @@ define([
   'use strict';
 
   var FROM_URL = 'http://example.com/';
-  var FXA_ROOT_URL = intern.config.fxaContentRoot;
+  var FXA_ROOT_URL = intern.executor.config.fxaContentRoot;
 
   registerSuite({
     name: 'back button after navigating to the root',
 
     'start at github, visit Fxa root, click `back` - should go back to example': function () {
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(FROM_URL))
         .get(require.toUrl(FXA_ROOT_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findById('fxa-signup-header')
 
         // click back.

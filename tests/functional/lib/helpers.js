@@ -14,7 +14,7 @@ define([
         Url, Querystring) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var CONTENT_SERVER = config.fxaContentRoot;
   var OAUTH_APP = config.fxaOauthApp;
   var EMAIL_SERVER_ROOT = config.fxaEmailRoot;
@@ -36,7 +36,7 @@ define([
       options['123done'] = false;
     }
 
-    return context.get('remote')
+    return context.remote
       .then(function () {
         if (options.contentServer) {
           return clearContentServerState(context);
@@ -51,7 +51,7 @@ define([
 
   function clearContentServerState(context) {
     // clear localStorage to avoid polluting other tests.
-    return context.get('remote')
+    return context.remote
       // always go to the content server so the browser state is cleared,
       // switch to the top level frame, if we aren't already. This fixes the
       // iframe flow.
@@ -62,7 +62,7 @@ define([
         // only load up the content server if we aren't
         // already at the content server.
         if (url.indexOf(CONTENT_SERVER) === -1) {
-          return context.get('remote').get(require.toUrl(CONTENT_SERVER + 'clear'))
+          return context.remote.get(require.toUrl(CONTENT_SERVER + 'clear'))
                     .setFindTimeout(config.pageLoadTimeout)
                     .findById('fxa-clear-storage-header');
         }
@@ -96,7 +96,7 @@ define([
      * completes by adding an element to the DOM. Selenium will look for
      * the added element.
      */
-    return context.get('remote')
+    return context.remote
       // switch to the top level frame, if we aren't already. This fixes the
       // iframe flow.
       .switchToFrame(null)
@@ -119,7 +119,7 @@ define([
 
   function clearSessionStorage(context) {
     // clear localStorage to avoid polluting other tests.
-    return context.get('remote')
+    return context.remote
       .execute(function () {
         try {
           /* global sessionStorage */
@@ -182,7 +182,7 @@ define([
 
   function noSuchElement(context, selector) {
     return function () {
-      return context.get('remote')
+      return context.remote
         .setFindTimeout(0)
 
         .findByCssSelector(selector)
@@ -227,7 +227,7 @@ define([
 
   function openExternalSite(context) {
     return function () {
-      return context.get('remote')
+      return context.remote
         .get(require.toUrl(EXTERNAL_SITE_URL))
           .findByPartialLinkText(EXTERNAL_SITE_LINK_TEXT)
         .end();
@@ -242,7 +242,7 @@ define([
 
     return getVerificationLink(user, index)
       .then(function (verificationLink) {
-        return context.get('remote')
+        return context.remote
           .execute(function (verificationLink, windowName) {
             var newWindow = window.open(verificationLink, windowName);
 
@@ -314,16 +314,16 @@ define([
     // only available programatically.
     if (page === 'force_auth') {
 
-      return context.get('remote')
+      return context.remote
         .get(require.toUrl(OAUTH_APP + 'api/force_auth' + urlSuffix))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('#fxa-force-auth-header')
         .end();
     }
 
-    return context.get('remote')
+    return context.remote
       .get(require.toUrl(OAUTH_APP))
-      .setFindTimeout(intern.config.pageLoadTimeout)
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('#splash .' + page)
         .click()
@@ -336,12 +336,12 @@ define([
 
       .then(function () {
         if (urlSuffix) {
-          return context.get('remote')
+          return context.remote
             .getCurrentUrl()
             .then(function (url) {
               url += urlSuffix;
 
-              return context.get('remote').get(require.toUrl(url));
+              return context.remote.get(require.toUrl(url));
             });
         }
       })
@@ -351,16 +351,16 @@ define([
   }
 
   function fillOutSignIn(context, email, password, alwaysLoad) {
-    return context.get('remote')
+    return context.remote
       .getCurrentUrl()
       .then(function (currentUrl) {
         // only load the signin page if not already at a signin page.
         // the leading [\/#] allows for either the standard redirect or iframe
         // flow. The iframe flow must use the window hash for routing.
         if (! /[\/#]signin(?:$|\?)/.test(currentUrl) || alwaysLoad) {
-          return context.get('remote')
+          return context.remote
             .get(require.toUrl(SIGNIN_URL))
-            .setFindTimeout(intern.config.pageLoadTimeout);
+            .setFindTimeout(intern.executor.config.pageLoadTimeout);
         }
       })
 
@@ -382,16 +382,16 @@ define([
   }
 
   function fillOutSignUp(context, email, password, year, customizeSync) {
-    return context.get('remote')
+    return context.remote
       .getCurrentUrl()
       .then(function (currentUrl) {
         // only load the signup page if not already at a signup page.
         // the leading [\/#] allows for either the standard redirect or iframe
         // flow. The iframe flow must use the window hash for routing.
         if (! /[\/#]signup(?:$|\?)/.test(currentUrl)) {
-          return context.get('remote')
+          return context.remote
             .get(require.toUrl(SIGNUP_URL))
-            .setFindTimeout(intern.config.pageLoadTimeout);
+            .setFindTimeout(intern.executor.config.pageLoadTimeout);
         }
       })
 
@@ -416,7 +416,7 @@ define([
 
       .then(function () {
         if (customizeSync) {
-          return context.get('remote')
+          return context.remote
             .findByCssSelector('form input.customize-sync')
               .click()
             .end();
@@ -429,7 +429,7 @@ define([
   }
 
   function fillOutResetPassword(context, email) {
-    return context.get('remote')
+    return context.remote
       .getCurrentUrl()
       .then(function (currentUrl) {
         // only load the reset_password page if not already at
@@ -437,9 +437,9 @@ define([
         // the leading [\/#] allows for either the standard redirect or iframe
         // flow. The iframe flow must use the window hash for routing.
         if (! /[\/#]reset_password(?:$|\?)/.test(currentUrl)) {
-          return context.get('remote')
+          return context.remote
             .get(require.toUrl(RESET_PASSWORD_URL))
-            .setFindTimeout(intern.config.pageLoadTimeout);
+            .setFindTimeout(intern.executor.config.pageLoadTimeout);
         }
       })
 
@@ -458,8 +458,8 @@ define([
   }
 
   function fillOutCompleteResetPassword(context, password, vpassword) {
-    return context.get('remote')
-      .setFindTimeout(intern.config.pageLoadTimeout)
+    return context.remote
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('#fxa-complete-reset-password-header')
       .end()
@@ -478,8 +478,8 @@ define([
   }
 
   function fillOutChangePassword(context, oldPassword, newPassword) {
-    return context.get('remote')
-      .setFindTimeout(intern.config.pageLoadTimeout)
+    return context.remote
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('#old_password')
         .click()
@@ -497,8 +497,8 @@ define([
   }
 
   function fillOutDeleteAccount(context, password) {
-    return context.get('remote')
-      .setFindTimeout(intern.config.pageLoadTimeout)
+    return context.remote
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('form input.password')
         .click()
@@ -532,7 +532,7 @@ define([
 
   function testIsBrowserNotified(context, command, cb) {
     return function () {
-      return context.get('remote')
+      return context.remote
         .findByCssSelector('#message-' + command.replace(/:/g, '-'))
           .getProperty('innerText')
           .then(function (innerText) {

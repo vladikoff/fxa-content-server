@@ -6,14 +6,15 @@
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define([
-  'intern/lib/args',
+  'intern',
   'intern/node_modules/dojo/has!host-node?intern/node_modules/dojo/topic',
   './tools/firefox_profile'
 ],
-function (args, topic, firefoxProfile) {
+function (intern, topic, firefoxProfile) {
   /*jshint maxcomplexity:10 */
   'use strict';
 
+  var args = intern.args;
   var fxaAuthRoot = args.fxaAuthRoot || 'http://127.0.0.1:9000/v1';
   var fxaContentRoot = args.fxaContentRoot || 'http://127.0.0.1:3030/';
   var fxaEmailRoot = args.fxaEmailRoot || 'http://127.0.0.1:9001';

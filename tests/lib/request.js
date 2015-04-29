@@ -4,12 +4,12 @@
 
 define([
   'intern/node_modules/dojo/node!xmlhttprequest',
-  'intern/node_modules/dojo/Deferred'
-], function (nodeXMLHttpRequest, Deferred) {
+  'intern/node_modules/dojo/Promise'
+], function (nodeXMLHttpRequest, Promise) {
   'use strict';
 
   function request(uri, method, jsonPayload) {
-    var dfd = new Deferred();
+    var dfd = new Promise.Deferred();
     var xhr = new nodeXMLHttpRequest.XMLHttpRequest();
     var payload;
 

@@ -17,7 +17,7 @@ define([
         pollUntil, FxaClient, TestHelpers, FunctionalHelpers, FxDesktopHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var PAGE_URL = config.fxaContentRoot + 'signup?context=fx_desktop_v1&service=sync';
 
   var SIGNIN_URL = config.fxaContentRoot + 'signin';
@@ -55,7 +55,7 @@ define([
           // signup page. If a fresh signup page is not forced, the
           // bounced_email tests try to sign up using the Sync broker,
           // resulting in a channel timeout.
-          self.get('remote')
+          self.remote
             .get(require.toUrl(SIGNIN_URL))
 
             .findByCssSelector('#fxa-signin-header')
@@ -67,9 +67,9 @@ define([
 
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('#fxa-signup-header')
@@ -121,9 +121,9 @@ define([
     'signup, verify same browser with original tab closed': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('#fxa-signup-header')
@@ -162,9 +162,9 @@ define([
     'signup, verify same browser by replacing the original tab': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('#fxa-signup-header')
@@ -181,7 +181,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote').get(require.toUrl(verificationLink));
+          return self.remote.get(require.toUrl(verificationLink));
         })
 
         .findByCssSelector('#fxa-sign-up-complete-header')
@@ -192,9 +192,9 @@ define([
     'signup, verify different browser - from original tab\'s P.O.V.': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('#fxa-signup-header')
@@ -224,9 +224,9 @@ define([
     'signup, verify different browser - from new browser\'s P.O.V.': function () {
       var self = this;
 
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .execute(listenForFxaCommands)
 
         .findByCssSelector('#fxa-signup-header')
@@ -255,7 +255,7 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (link) {
-          return self.get('remote').get(link);
+          return self.remote.get(link);
         })
 
         // user should be redirected to "Success!" screen
@@ -273,7 +273,7 @@ define([
 
     'choose option to customize sync': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(PAGE_URL))
         .execute(listenForFxaCommands)
 
@@ -303,7 +303,7 @@ define([
 
     'force customize sync checkbox to be checked': function () {
       var url = (PAGE_URL += '&customizeSync=true');
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url))
 
         .findByCssSelector('#customize-sync')

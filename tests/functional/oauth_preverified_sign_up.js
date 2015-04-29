@@ -15,7 +15,7 @@ define([
 ], function (intern, registerSuite, assert, require, nodeXMLHttpRequest, FxaClient, restmail, TestHelpers, FunctionalHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var OAUTH_APP = config.fxaOauthApp;
   var TOO_YOUNG_YEAR = new Date().getFullYear() - 13;
 
@@ -47,11 +47,11 @@ define([
       var SIGNUP_URL = OAUTH_APP + 'api/preverified-signup?' +
                         'email=' + encodeURIComponent(email);
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNUP_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
-        .findByCssSelector('#fxa-signup-header')
+        .findByCssSelector('#fxa-signin-header')
         .end()
 
         .findByCssSelector('form input.password')

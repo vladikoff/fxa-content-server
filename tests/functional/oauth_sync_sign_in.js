@@ -17,7 +17,7 @@ define([
         pollUntil, FxaClient, TestHelpers, FunctionalHelpers, FxDesktopHelpers) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var PAGE_URL = config.fxaContentRoot + 'signin?context=fx_desktop_v1&service=sync';
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
 
@@ -79,11 +79,11 @@ define([
       var self = this;
       return verifyUser(email, 0)
         .then(function () {
-          return self.get('remote')
+          return self.remote
 
             // Sign in to Sync with existing account
             .get(require.toUrl(PAGE_URL))
-            .setFindTimeout(intern.config.pageLoadTimeout)
+            .setFindTimeout(intern.executor.config.pageLoadTimeout)
             .execute(listenForFxaCommands)
 
             .findByCssSelector('#fxa-signin-header')

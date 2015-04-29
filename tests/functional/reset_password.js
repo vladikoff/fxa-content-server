@@ -17,7 +17,7 @@ define([
       FxaClient, restmail, TestHelpers, FunctionalHelpers, Test) {
   'use strict';
 
-  var config = intern.config;
+  var config = intern.executor.config;
   var AUTH_SERVER_ROOT = config.fxaAuthRoot;
   var EMAIL_SERVER_ROOT = config.fxaEmailRoot;
   var SIGNIN_PAGE_URL = config.fxaContentRoot + 'signin';
@@ -79,13 +79,13 @@ define([
     }
 
     url += queryParams.join('&');
-    return context.get('remote').get(require.toUrl(url))
-      .setFindTimeout(intern.config.pageLoadTimeout);
+    return context.remote.get(require.toUrl(url))
+      .setFindTimeout(intern.executor.config.pageLoadTimeout);
   }
 
   function testSuccessMessageVisible(context, message) {
-    return context.get('remote')
-      .setFindTimeout(intern.config.pageLoadTimeout)
+    return context.remote
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .then(FunctionalHelpers.visibleByQSA('.success'))
       .findByCssSelector('.success')
@@ -98,8 +98,8 @@ define([
   }
 
   function testAtSettingsWithVerifiedMessage(context) {
-    return context.get('remote')
-      .setFindTimeout(intern.config.pageLoadTimeout)
+    return context.remote
+      .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
       .findByCssSelector('#fxa-settings-header')
       .end()
@@ -129,9 +129,9 @@ define([
     },
 
     'visit confirmation screen without initiating reset_password, user is redirected to /reset_password': function () {
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(CONFIRM_PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
         // user is immediately redirected to /reset_password if they have no
         // sessionToken.
@@ -142,9 +142,9 @@ define([
 
     'open /reset_password page from /signin': function () {
       var self = this;
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(SIGNIN_PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
         .findByCssSelector('input[type="email"]')
           .clearValue()
@@ -185,9 +185,9 @@ define([
       var self = this;
       email = 'partial';
 
-      return self.get('remote')
+      return self.remote
         .get(require.toUrl(SIGNIN_PAGE_URL))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
 
         .findByCssSelector('input[type=email]')
           .click()
@@ -413,9 +413,9 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote')
+          return self.remote
             .get(require.toUrl(verificationLink))
-            .setFindTimeout(intern.config.pageLoadTimeout);
+            .setFindTimeout(intern.executor.config.pageLoadTimeout);
         })
 
         .then(function () {
@@ -487,9 +487,9 @@ define([
           return FunctionalHelpers.getVerificationLink(email, 0);
         })
         .then(function (verificationLink) {
-          return self.get('remote')
+          return self.remote
             .get(require.toUrl(verificationLink))
-            .setFindTimeout(intern.config.pageLoadTimeout);
+            .setFindTimeout(intern.executor.config.pageLoadTimeout);
         })
 
         .then(function () {
@@ -627,9 +627,9 @@ define([
     'browse directly to page with email on query params': function () {
       var url = RESET_PAGE_URL + '?email=' + email;
       var self = this;
-      return this.get('remote')
+      return this.remote
         .get(require.toUrl(url))
-        .setFindTimeout(intern.config.pageLoadTimeout)
+        .setFindTimeout(intern.executor.config.pageLoadTimeout)
         .findByCssSelector('form input.email')
           .getAttribute('value')
           .then(function (resultText) {
