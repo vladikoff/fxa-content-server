@@ -23,7 +23,7 @@ module.exports = function () {
       metricsCollector.write(req.body);
 
       // send the metrics body to the StatsD collector for processing
-        statsd.send(req.body);
+      statsd.send(req.body);
     }
   };
 };

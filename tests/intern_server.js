@@ -12,14 +12,15 @@ define([
   intern.environments = [];
   intern.functionalSuites = [];
   intern.suites = [
-    'tests/server/routes',
+    /*'tests/server/routes',
     'tests/server/ver.json.js',
     'tests/server/cookies_disabled',
     'tests/server/l10n',
     'tests/server/metrics',
     'tests/server/metrics-collector-stderr',
     'tests/server/configuration',
-    'tests/server/proxy'
+    'tests/server/proxy'*/
+    'tests/server/statsd-collector'
   ];
 
   return intern;
