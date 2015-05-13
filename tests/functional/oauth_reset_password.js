@@ -58,6 +58,7 @@ define([
 
     'reset password, verify same browser': function () {
       var self = this;
+      self.timeout = 90 * 1000;
 
       return FunctionalHelpers.openFxaFromRp(self, 'signin')
         .getCurrentUrl()
