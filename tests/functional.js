@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  './functional/sign_in',
+ /* './functional/sign_in',
   './functional/sign_in_cached',
   './functional/sync_sign_in',
   './functional/sign_up',
@@ -32,7 +32,7 @@ define([
   './functional/fonts',
   './functional/password_visibility',
   './functional/avatar',
-  './functional/alternative_styles'
+  './functional/alternative_styles'*/
 ], function () {
   'use strict';
 });
