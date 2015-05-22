@@ -13,12 +13,13 @@ define([
   'stache!templates/sign_up',
   'lib/auth-errors',
   'lib/mailcheck',
+  'lib/storage',
   'views/mixins/password-mixin',
   'views/mixins/service-mixin',
   'views/coppa/coppa-date-picker'
 ],
 function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
-      PasswordMixin, ServiceMixin, CoppaDatePicker) {
+      Storage, PasswordMixin, ServiceMixin, CoppaDatePicker) {
   var t = BaseView.t;
 
   function selectAutoFocusEl(bouncedEmail, email, password) {
@@ -41,6 +42,8 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
 
       this._formPrefill = options.formPrefill;
       this._coppa = options.coppa;
+      this._able = options.able;
+      this._abForcedOptin  = options.abForcedOptin
     },
 
     beforeRender: function () {
@@ -190,7 +193,21 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
     },
 
     suggestEmail: function () {
-      mailcheck(this.$el.find('.email'), this.metrics, this.translator, this.window.location.search);
+      /*
+      if (Url.searchParam('mailcheck', queryParams) === '1') {
+        enabled = true;
+      }*/
+
+      var store = Storage.factory('localStorage', this.window);
+
+      if (this._able.choose('mailcheckEnabled', {
+        sessionId: store.get('uuid'),
+        metricsEnabled: store.get('metricsEnabled'),
+        abForcedOptin: this._abForcedOptin
+      })) {
+        console.log('mailcheck enabled');
+        mailcheck(this.$el.find('.email'), this.metrics, this.translator);
+      }
     },
 
     _isEmailSameAsBouncedEmail: function () {

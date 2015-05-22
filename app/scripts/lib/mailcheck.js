@@ -35,19 +35,13 @@ function (Tooltip, Url) {
    * @param {Object} translator Translator object passed by the view
    * @param {String} queryParams Window query params
    */
-  return function checkMailInput(target, metrics, translator, queryParams) {
+  return function checkMailInput(target, metrics, translator) {
     var element = $(target);
     if (!element.length) {
       return;
     }
-    var enabled = false;
-
-    // Url param flag 'mailcheck' to disable the feature unless the flag is set
-    if (Url.searchParam('mailcheck', queryParams) === '1') {
-      enabled = true;
-    }
     // check if the text value was changed before showing the tooltip
-    if (element[0].previousValue !==  element.val() && element.val().length > MIN_CHARS && enabled) {
+    if (element[0].previousValue !== element.val() && element.val().length > MIN_CHARS) {
       element.mailcheck({
         domains: DOMAINS,
         secondLevelDomains: SECOND_LEVEL_DOMAINS,

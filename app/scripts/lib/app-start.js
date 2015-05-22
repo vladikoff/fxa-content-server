@@ -21,6 +21,7 @@ define([
   'underscore',
   'backbone',
   'lib/promise',
+  'uuid',
   'router',
   'lib/translator',
   'lib/session',
@@ -61,6 +62,7 @@ function (
   _,
   Backbone,
   p,
+  uuid,
   Router,
   Translator,
   Session,
@@ -104,6 +106,10 @@ function (
 
   function createMetrics(sampleRate, options) {
     if (isMetricsCollectionEnabled(sampleRate)) {
+      var store = Storage.factory('localStorage', options.window);
+      store.set('uuid', uuid.v4());
+      store.set('metricsEnabled', true);
+
       return new Metrics(options);
     }
 
@@ -244,7 +250,8 @@ function (
         devicePixelRatio: screenInfo.devicePixelRatio,
         screenHeight: screenInfo.screenHeight,
         screenWidth: screenInfo.screenWidth,
-        able: this._able
+        able: this._able,
+        window: this._window
       });
       this._metrics.init();
     },
