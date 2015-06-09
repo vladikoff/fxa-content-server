@@ -76,7 +76,7 @@ define([], function () {
     ACCESS_TYPE_ONLINE: 'online',
     ACCESS_TYPE_OFFLINE: 'offline',
 
-    DEFAULT_XHR_TIMEOUT_MS: 2500
+    DEFAULT_XHR_TIMEOUT_MS: 5000
   };
 });
 

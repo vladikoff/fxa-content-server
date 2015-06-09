@@ -21,7 +21,7 @@ function (Cocktail, _, ConfirmView, BaseView, Template, p, Session, AuthErrors,
 
   var t = BaseView.t;
 
-  var SESSION_UPDATE_TIMEOUT_MS = 10000;
+  var SESSION_UPDATE_TIMEOUT_MS = 20000;
 
   var View = ConfirmView.extend({
     template: Template,

@@ -28,7 +28,7 @@ function (intern, topic, firefoxProfile) {
   var fxaDevBox = !! args.fxaDevBox;
 
   var fxaToken = args.fxaToken || 'http://';
-  var asyncTimeout = parseInt(args.asyncTimeout || 5000, 10);
+  var asyncTimeout = parseInt(args.asyncTimeout || 15000, 10);
 
   if (topic) {
     topic.subscribe('/suite/start', function (suite) {
