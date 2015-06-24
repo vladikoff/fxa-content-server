@@ -4,13 +4,14 @@
 
 define([
   'cocktail',
+  'jquery',
   'views/form',
   'stache!templates/permissions',
   'lib/promise',
   'views/mixins/back-mixin',
   'views/mixins/service-mixin'
 ],
-function (Cocktail, FormView, Template, p, BackMixin, ServiceMixin) {
+function (Cocktail, $, FormView, Template, p, BackMixin, ServiceMixin) {
   'use strict';
 
   var View = FormView.extend({
@@ -23,6 +24,28 @@ function (Cocktail, FormView, Template, p, BackMixin, ServiceMixin) {
       this._account = data && this.user.initAccount(data.account);
 
       this.type = options.type;
+    },
+
+    events: {
+      'click #anon': 'gotoAnon'
+    },
+
+    gotoAnon: function () {
+      console.log('gotoAnon');
+      console.log(this._account);
+      console.log(this.relier);
+      var url = 'http://127.0.0.1:9010/v1/anon/new';
+      var data  = {
+        uid: this._account.get('uid'),
+        clientId: this.relier.get('clientId')
+      };
+
+      $.post(url, data)
+        .done(function(data) {
+          $('#permission-request').text('321Done will know you as:');
+          console.log(data);
+        });
+
     },
 
     getAccount: function () {

@@ -262,7 +262,7 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
           }
           self.logScreenEvent('success');
 
-          if (self.relier.accountNeedsPermissions(account)) {
+          if (true) {
             self.navigate('signup_permissions', {
               data: {
                 account: account

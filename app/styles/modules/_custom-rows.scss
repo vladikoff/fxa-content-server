@@ -165,3 +165,34 @@ ul.permission-links {
     padding: 0;
   }
 }
+
+
+#anon {
+  font-size: 20px;
+  background: orange;
+}
+
+#anondv {
+  border-bottom: 1px dashed grey;
+  height: 1px;
+  width: 100%;
+}
+
+#permissions input {
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: 1px solid #8a9ba8;
+  box-shadow: inset 0 1px 1px #f2f2f2;
+  color: #424f59;
+  outline: none;
+  position: relative;
+  transition-duration: 150ms;
+  transition-property: border-color;
+  width: 100%;
+  z-index: 2;
+}
+
+#permissions .input-row {
+  text-align: left;
+  margin: 10px 0;
+}

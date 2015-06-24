@@ -116,7 +116,7 @@ function (Cocktail, p, BaseView, FormView, SignInTemplate, Session,
           return self.user.signInAccount(account, self.relier);
         })
         .then(function (account) {
-          if (self.relier.accountNeedsPermissions(account)) {
+          if (true) {
             self.navigate('signin_permissions', {
               data: {
                 account: account

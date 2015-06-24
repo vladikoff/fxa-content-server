@@ -15,8 +15,19 @@
         <input type="email" class="email" value="{{ email }}" disabled/>
       </div>
 
+      <div class="input-row">
+        <label class="small-label">{{#t}}Display Name{{/t}}</label>
+        <input type="text" value="Vlad F" disabled/>
+      </div>
+
       <div class="button-row">
         <button id="accept" type="submit">{{#t}}Accept{{/t}}</button>
+      </div>
+
+      <div id="anondv"></div>
+
+      <div class="button-row">
+        <button id="anon" type="button">{{#t}}Create Anonymous Identity{{/t}}</button>
       </div>
     </form>
 
