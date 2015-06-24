@@ -11,13 +11,21 @@
 
     <form id="permissions" novalidate>
       <div class="input-row">
+        <label class="small-label">{{#t}}Avatar{{/t}}</label>
+
+        <div class="avatar-wrapper avatar-view">
+
+        </div>
+      </div>
+
+      <div class="input-row">
         <label class="small-label">{{#t}}Email{{/t}}</label>
         <input type="email" class="email" value="{{ email }}" disabled/>
       </div>
 
       <div class="input-row">
         <label class="small-label">{{#t}}Display Name{{/t}}</label>
-        <input type="text" value="Vlad F" disabled/>
+        <input class="display-name" type="text" value="Vlad F" disabled/>
       </div>
 
       <div class="button-row">

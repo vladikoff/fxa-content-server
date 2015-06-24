@@ -9,9 +9,10 @@ define([
   'stache!templates/permissions',
   'lib/promise',
   'views/mixins/back-mixin',
-  'views/mixins/service-mixin'
+  'views/mixins/service-mixin',
+  'views/mixins/avatar-mixin',
 ],
-function (Cocktail, $, FormView, Template, p, BackMixin, ServiceMixin) {
+function (Cocktail, $, FormView, Template, p, BackMixin, ServiceMixin, AvatarMixin) {
   'use strict';
 
   var View = FormView.extend({
@@ -43,6 +44,14 @@ function (Cocktail, $, FormView, Template, p, BackMixin, ServiceMixin) {
       $.post(url, data)
         .done(function(data) {
           $('#permission-request').text('321Done will know you as:');
+          $('#accept').text('Continue');
+          $('#anon').hide();
+          $('input').addClass('jello animated');
+          $('.card').addClass('jello animated');
+          $('.display-name').val(data.displayName);
+          $('.email').val(data.email);
+          $('.avatar-wrapper').append('<img />');
+          $('.avatar-wrapper img').attr("src", data.avatar);
           console.log(data);
         });
 
@@ -136,13 +145,25 @@ function (Cocktail, $, FormView, Template, p, BackMixin, ServiceMixin) {
 
     is: function (type) {
       return this.type === type;
+    },
+
+    afterVisible: function () {
+      var self = this;
+      var account = self.getSignedInAccount();
+
+      FormView.prototype.afterVisible.call(self);
+      return self.displayAccountProfileImage(account)
+        .then(function () {
+          self._setupAvatarChangeLinks(self._isAvatarLinkVisible(account));
+        });
     }
   });
 
   Cocktail.mixin(
     View,
     ServiceMixin,
-    BackMixin
+    BackMixin,
+    AvatarMixin
   );
 
   return View;
