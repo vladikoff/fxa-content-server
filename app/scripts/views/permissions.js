@@ -46,6 +46,7 @@ function (Cocktail, $, FormView, Template, p, BackMixin, ServiceMixin, AvatarMix
           $('#permission-request').text('321Done will know you as:');
           $('#accept').text('Continue');
           $('#anon').hide();
+          $('.anon-label').show();
           $('input').addClass('jello animated');
           $('.card').addClass('jello animated');
           $('.display-name').val(data.displayName);
