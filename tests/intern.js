@@ -79,6 +79,7 @@ function (intern, topic, firefoxProfile) {
 
   // to create a profile, give it the `config` option.
   config.capabilities.firefox_profile = firefoxProfile(config); //eslint-disable-line camelcase
+  config.capabilities.nativeEvents = true;
 
   // custom Firefox binary location, if specified then the default is ignored.
   // ref: https://code.google.com/p/selenium/wiki/DesiredCapabilities#WebDriver
