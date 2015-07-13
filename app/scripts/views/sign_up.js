@@ -16,10 +16,11 @@ define([
   'views/mixins/service-mixin',
   'views/mixins/checkbox-mixin',
   'views/mixins/resume-token-mixin',
-  'views/coppa/coppa-date-picker'
+  'views/coppa/coppa-date-picker',
+  'views/coppa/coppa-age-input'
 ],
 function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
-      Url, PasswordMixin, ServiceMixin, CheckboxMixin, ResumeTokenMixin, CoppaDatePicker) {
+      Url, PasswordMixin, ServiceMixin, CheckboxMixin, ResumeTokenMixin, CoppaDatePicker, CoppaAgeInput) {
   'use strict';
 
   var t = BaseView.t;
@@ -58,7 +59,7 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
       return FormView.prototype.beforeRender.call(this);
     },
 
-    _createCoppaView: function () {
+    _createCoppaDropdownView: function () {
       var self = this;
 
       if (self._coppa) {
@@ -82,13 +83,52 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
         });
     },
 
+    _createCoppaInputView: function () {
+      var self = this;
+
+      if (self._coppa) {
+        return p();
+      }
+
+      var autofocusEl = this._selectAutoFocusEl();
+      var coppaDatePicker = new CoppaAgeInput({
+        el: self.$('#coppa'),
+        screenName: self.getScreenName(),
+        formPrefill: self._formPrefill,
+        shouldFocus: autofocusEl === null
+      });
+
+      return coppaDatePicker.render()
+        .then(function () {
+          self.trackSubview(coppaDatePicker);
+          coppaDatePicker.on('submit', self.validateAndSubmit.bind(self));
+
+          self._coppa = coppaDatePicker;
+        });
+    },
+
+    _createCoppa: function () {
+      var abData = {
+        isMetricsEnabled: this.metrics.isCollectionEnabled(),
+        uniqueUserId: this.user.get('uniqueUserId'),
+        forceCoppa: Url.searchParam('coppaInput', this.window.location.search),
+      };
+
+      if (this._able.choose('coppaMode', abData) === 'input') {
+        return this._createCoppaInputView();
+      } else {
+        return this._createCoppaDropdownView();
+      }
+
+    },
+
     afterRender: function () {
       var self = this;
 
       self.logScreenEvent('email-optin.visible.' +
           String(self._isEmailOptInEnabled()));
 
-      self._createCoppaView()
+      self._createCoppa()
         .then(function () {
           self.transformLinks();
 
