@@ -117,7 +117,8 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
       if (this._able.choose('coppaMode', abData) === 'input') {
         return this._createCoppaInputView();
       } else {
-        return this._createCoppaDropdownView();
+        return this._createCoppaInputView();
+        //return this._createCoppaDropdownView();
       }
 
     },
