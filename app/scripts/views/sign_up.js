@@ -111,16 +111,16 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
       var abData = {
         isMetricsEnabled: this.metrics.isCollectionEnabled(),
         uniqueUserId: this.user.get('uniqueUserId'),
-        forceCoppa: Url.searchParam('coppaInput', this.window.location.search),
+        forceCoppa: Url.searchParam('forceCoppa', this.window.location.search)
       };
+
+      console.log(this._able.choose('coppaMode', abData));
 
       if (this._able.choose('coppaMode', abData) === 'input') {
         return this._createCoppaInputView();
       } else {
-        return this._createCoppaInputView();
-        //return this._createCoppaDropdownView();
+        return this._createCoppaDropdownView();
       }
-
     },
 
     afterRender: function () {

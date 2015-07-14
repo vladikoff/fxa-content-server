@@ -12,16 +12,12 @@ define([
   'use strict';
 
   var now = new Date();
-  var CUTOFF_AGE = {
-    year: now.getFullYear() - 13,
-    month: now.getMonth(),
-    date: now.getDate()
-  };
+  var CUTOFF_AGE = 13;
 
   var View = FormView.extend({
 
     template: Template,
-    className: 'coppa-date-picker',
+    className: 'coppa-age-input',
 
     initialize: function (options) {
       options = options || {};
@@ -116,38 +112,6 @@ define([
         });
     },
 
-    onSelectFocus: function (event) {
-      this.addSelectFocus(event.target);
-    },
-
-    onSelectBlur: function (event) {
-      this.removeSelectFocus(event.target);
-    },
-
-    onSelectChange: function (event) {
-      this.removeInvalidRow(event.target);
-    },
-
-    addSelectFocus: function (element) {
-      $(element).parent().addClass('select-focus');
-    },
-
-    removeSelectFocus: function (element) {
-      $(element).parent().removeClass('select-focus');
-    },
-
-    addInvalidRow: function (element) {
-      $(element).parent().addClass('invalid-row');
-    },
-
-    removeInvalidRow: function (element) {
-      $(element).parent().removeClass('invalid-row');
-    },
-
-    beforeDestroy: function () {
-      this._formPrefill.set('year', this.$('#fxa-age-year').val());
-    },
-
     submitOnEnter: function (event) {
       if (event.which === 13) {
         this.trigger('submit');
@@ -171,16 +135,8 @@ define([
       return ! (isNaN(this._getMonth()) || isNaN(this._getDate()));
     },
 
-    _getYear: function () {
-      return parseInt(this.$('#fxa-age-year').val(), 10);
-    },
-
-    _getMonth: function () {
-      return parseInt(this.$('#fxa-age-month').val(), 10);
-    },
-
-    _getDate: function () {
-      return parseInt(this.$('#fxa-age-date').val(), 10);
+    _getAge: function () {
+      return parseInt(this.$('#fxa').val(), 10);
     },
 
     onUserYearSelect: function () {
