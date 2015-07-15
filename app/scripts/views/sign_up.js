@@ -141,6 +141,7 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
       return {
         serviceName: relier.get('serviceName'),
         isSync: relier.isSync(),
+        isSyncChooseInBrowser: this._isSyncChooser(),
         isCustomizeSyncChecked: relier.isCustomizeSyncChecked(),
         isPasswordAutoCompleteDisabled: this.isPasswordAutoCompleteDisabled(),
         email: prefillEmail,
@@ -244,6 +245,10 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
       this.navigate('cannot_create_account');
     },
 
+    _isSyncChooser: function () {
+      return this.relier.isSyncChooseInBrowser(this.user.get('uniqueUserId'), this.window.location.search, this._able);
+    },
+
     _initAccount: function () {
       var self = this;
 
@@ -275,8 +280,20 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
           }
           self.logScreenEvent('success');
 
+          // if this is an OAuth flow and the relier is untrusted, then we ask for permissions
           if (self.relier.accountNeedsPermissions(account)) {
             self.navigate('signup_permissions', {
+              data: {
+                account: account
+              }
+            });
+
+            return;
+          }
+
+          // if we are setting up Firefox Sync and what the user to choose what to sync first
+          if (self._isSyncChooser()) {
+            self.navigate('choose_what_to_sync', {
               data: {
                 account: account
               }

@@ -16,9 +16,9 @@ define([
   'models/mixins/resume-token',
   'models/mixins/search-param',
   'lib/promise',
+  'lib/url',
   'lib/constants'
-], function (Cocktail, BaseRelier, ResumeTokenMixin, SearchParamMixin, p,
-  Constants) {
+], function (_, BaseRelier, SearchParamMixin, p, Url, Constants) {
   'use strict';
 
   var RELIER_FIELDS_IN_RESUME_TOKEN = ['campaign', 'entrypoint'];
@@ -70,6 +70,7 @@ define([
           self.importSearchParam('setting');
           self.importSearchParam('entrypoint');
           self.importSearchParam('campaign');
+          self.importSearchParam('sync_chooser');
 
           // A relier can indicate they do not want to allow
           // cached credentials if they set email === 'blank'
@@ -87,6 +88,19 @@ define([
      */
     isSync: function () {
       return this.get('service') === Constants.FX_DESKTOP_SYNC;
+    },
+
+    /**
+     * Check if the relier is Sync for Firefox Desktop
+     */
+    isSyncChooseInBrowser: function (uniqueUserId, locationParams, able) {
+      var abData = {
+        uniqueUserId: uniqueUserId,
+        // the window parameter will override any ab testing features
+        forceSyncChooserMode: Url.searchParam('sync_chooser', locationParams)
+      };
+
+      return able.choose('syncChooserMode', abData) === 'web';
     },
 
     /**
