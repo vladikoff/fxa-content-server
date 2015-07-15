@@ -5,10 +5,12 @@
 
 var MetricsCollector = require('../metrics-collector-stderr');
 var StatsDCollector = require('../statsd-collector');
+var GACollector = require('../ga-collector');
 
 module.exports = function () {
   var metricsCollector = new MetricsCollector();
   var statsd = new StatsDCollector();
+  var ga = new GACollector();
   statsd.init();
 
   return {
@@ -26,6 +28,8 @@ module.exports = function () {
         // send the metrics body to the StatsD collector for processing
         statsd.write(metrics);
       }
+
+      ga.write(metrics);
     }
   };
 };
