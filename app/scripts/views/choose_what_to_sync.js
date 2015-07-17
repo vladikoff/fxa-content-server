@@ -42,6 +42,11 @@ function (Cocktail, FormView, Template, p, BackMixin, ServiceMixin) {
     submit: function () {
       var self = this;
       var account = self.getAccount();
+      var declinedSyncEngines = this.$el.find('input[name=sync-content]').not(':checked').map(function () {
+          return this.value;}
+      ).get();
+      account.set('declinedSyncEngines', declinedSyncEngines);
+      account.set('customizeSync', true);
 
       return p().then(function () {
         self.user.setAccount(account);

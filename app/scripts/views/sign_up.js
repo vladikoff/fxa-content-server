@@ -246,6 +246,7 @@ function (Cocktail, _, p, BaseView, FormView, Template, AuthErrors, mailcheck,
     },
 
     _isSyncChooser: function () {
+      return true;
       return this.relier.isSyncChooseInBrowser(this.user.get('uniqueUserId'), this.window.location.search, this._able);
     },
 

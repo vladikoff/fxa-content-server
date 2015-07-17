@@ -187,8 +187,6 @@ define([
         'verified'
       ];
 
-      account.set('declinedSyncEngines', ['passwords']);
-
       var loginData = {};
       _.each(ALLOWED_FIELDS, function (field) {
         loginData[field] = account.get(field);

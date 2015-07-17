@@ -18,7 +18,7 @@ define([
   'lib/promise',
   'lib/url',
   'lib/constants'
-], function (_, BaseRelier, SearchParamMixin, p, Url, Constants) {
+], function (Cocktail, BaseRelier, ResumeTokenMixin, SearchParamMixin, p, Url, Constants) {
   'use strict';
 
   var RELIER_FIELDS_IN_RESUME_TOKEN = ['campaign', 'entrypoint'];
