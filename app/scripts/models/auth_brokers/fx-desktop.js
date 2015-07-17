@@ -183,8 +183,11 @@ define([
         'unwrapBKey',
         'keyFetchToken',
         'customizeSync',
+        'declinedSyncEngines',
         'verified'
       ];
+
+      account.set('declinedSyncEngines', ['passwords']);
 
       var loginData = {};
       _.each(ALLOWED_FIELDS, function (field) {
