@@ -46,6 +46,7 @@ define([
 
     teardown: function () {
       var self = this;
+      console.log('teardown: sync_sign_up.js')
 
       return FunctionalHelpers.clearBrowserState(this)
         .then(function () {

@@ -37,6 +37,7 @@ define([
     name: 'Firefox Desktop Sync sign_in',
 
     beforeEach: function () {
+      console.log('im running tests in sync_settings.js, please leave me alone :(');
       email = TestHelpers.createEmail();
 
       client = new FxaClient(AUTH_SERVER_ROOT, {

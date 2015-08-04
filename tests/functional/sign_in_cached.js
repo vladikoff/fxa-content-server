@@ -74,6 +74,7 @@ define([
     },
 
     teardown: function () {
+      console.log('teardown: sign_in_cached.js')
       return FunctionalHelpers.clearBrowserState(this);
     },
 
