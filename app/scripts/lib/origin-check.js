@@ -25,11 +25,14 @@
 
 define([
   'lib/promise',
-  'lib/channels/iframe'
-], function (p, IFrameChannel) {
+  'lib/channels/iframe',
+  'raven'
+], function (p, IFrameChannel, Raven) {
   'use strict';
 
-  var RESPONSE_TIMEOUT_MS = 100;
+  // This timeout needs to be long enough for slow machines to able to respond to
+  // See https://github.com/mozilla/fxa-content-server/issues/2946 for details
+  var RESPONSE_TIMEOUT_MS = 4000;
 
   function OriginCheck(win) {
     this._window = win;
@@ -48,6 +51,7 @@ define([
      *          Resolves to `null` if no allowed origin found.
      */
     getOrigin: function (targetWindow, allowedOrigins) {
+      var k = Date.now();
       var win = this._window;
       var deferred = p.defer();
 
@@ -59,6 +63,8 @@ define([
 
         var data = OriginCheck.parse(event.data);
         if (data && data.command === 'ping') {
+          var end = Date.now();
+          console.log('time', end - k);
           deferred.resolve(event.origin);
         }
       };
@@ -69,7 +75,6 @@ define([
       allowedOrigins.forEach(function (allowedOrigin) {
         targetWindow.postMessage(OriginCheck.stringify('ping'), allowedOrigin);
       });
-
       return deferred.promise
         // timeout after a short period. If no response is received,
         // no parent is listening.
@@ -77,7 +82,11 @@ define([
         .fail(function (err) {
           if (/Timed out/.test(String(err))) {
             // a timeout is A-OK, no allowed origins are listening.
+            Raven.captureException(new Error('Origin check timed out'));
+
             return null;
+          } else {
+            Raven.captureException(err);
           }
         })
         .fin(function () {
