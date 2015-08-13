@@ -270,7 +270,15 @@ var conf = module.exports = convict({
     },
     git: {
       doc: 'git url for experiments repo. set to empty to not pull',
-      default: 'github:mozilla/fxa-content-experiments#dev'
+      /*
+       _____  ______ __  __  ______      ________   _______ _    _ _____  _____
+       |  __ \|  ____|  \/  |/ __ \ \    / /  ____| |__   __| |  | |_   _|/ ____|
+       | |__) | |__  | \  / | |  | \ \  / /| |__       | |  | |__| | | | | (___
+       |  _  /|  __| | |\/| | |  | |\ \/ / |  __|      | |  |  __  | | |  \___ \
+       | | \ \| |____| |  | | |__| | \  /  | |____     | |  | |  | |_| |_ ____) |
+       |_|  \_\______|_|  |_|\____/   \/   |______|    |_|  |_|  |_|_____|_____/
+       */
+      default: 'github:vladikoff/fxa-content-experiments#gmail-button'
     },
     watch: {
       doc: 'poll the experiments git repo for changes',
