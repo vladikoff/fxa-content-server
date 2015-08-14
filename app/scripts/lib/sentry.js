@@ -11,7 +11,7 @@ define([
 
   var ALLOWED_QUERY_PARAMETERS = [
     'automatedBrowser',
-    'campaign',
+    'utm_campaign',
     'client_id',
     'context',
     'customizeSync',

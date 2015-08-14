@@ -16,7 +16,6 @@ define([
   var ResumeToken = Backbone.Model.extend({
     defaults: {
       // fields from a Relier
-      campaign: undefined,
       entrypoint: undefined,
       state: undefined,
       utmCampaign: null,

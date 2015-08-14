@@ -45,7 +45,7 @@ function (chai, Storage, Url, ResumeToken, UniqueUserId, WindowMock) {
 
     it('fetches from localStorage if not available in the `resume` token', function () {
       windowMock.location.search = Url.objToSearchString({
-        resume: ResumeToken.stringify({ campaign: 'spring2015' })
+        resume: ResumeToken.stringify({ utmCampaign: 'spring2015' })
       });
 
       var storage = Storage.factory('localStorage', windowMock);

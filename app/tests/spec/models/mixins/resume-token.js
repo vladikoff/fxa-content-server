@@ -17,7 +17,7 @@ define([
     var model;
     var CAMPAIGN = 'campaign id';
     var RESUME_DATA = {
-      campaign: CAMPAIGN,
+      utmCampaign: CAMPAIGN,
       notResumeable: 'this should not be picked'
     };
 

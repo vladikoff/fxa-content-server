@@ -32,7 +32,6 @@ define([
   SpeedTrap.prototype = speedTrap;
 
   var ALLOWED_FIELDS = [
-    'campaign',
     'context',
     'duration',
     'entrypoint',
@@ -58,7 +57,6 @@ define([
 
   var DEFAULT_INACTIVITY_TIMEOUT_MS = 2 * 60 * 1000;
   var NOT_REPORTED_VALUE = 'none';
-  var UNKNOWN_CAMPAIGN_ID = 'unknown';
 
 
   // convert a hash of marketing impressions into an array of objects.
@@ -92,7 +90,6 @@ define([
     this._entrypoint = options.entrypoint || NOT_REPORTED_VALUE;
     this._migration = options.migration || NOT_REPORTED_VALUE;
     this._service = options.service || NOT_REPORTED_VALUE;
-    this._campaign = options.campaign || NOT_REPORTED_VALUE;
     this._brokerType = options.brokerType || NOT_REPORTED_VALUE;
 
     this._clientHeight = options.clientHeight || NOT_REPORTED_VALUE;
@@ -212,7 +209,6 @@ define([
         entrypoint: this._entrypoint,
         migration: this._migration,
         marketing: flattenMarketingImpressions(this._marketingImpressions),
-        campaign: this._campaign,
         referrer: this._referrer,
         screen: {
           devicePixelRatio: this._devicePixelRatio,

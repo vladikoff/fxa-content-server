@@ -32,7 +32,6 @@ function (chai, StorageMetrics, Metrics, Storage, WindowMock) {
         brokerType: 'fx-desktop',
         entrypoint: 'menupanel',
         migration: 'sync1.5',
-        campaign: 'fennec',
         devicePixelRatio: 2,
         clientWidth: 1033,
         clientHeight: 966,

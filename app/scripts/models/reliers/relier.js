@@ -21,7 +21,7 @@ define([
   Constants) {
   'use strict';
 
-  var RELIER_FIELDS_IN_RESUME_TOKEN = ['campaign', 'entrypoint'];
+  var RELIER_FIELDS_IN_RESUME_TOKEN = ['utmCampaign', 'entrypoint'];
 
   var Relier = BaseRelier.extend({
     defaults: {
@@ -30,7 +30,6 @@ define([
       email: null,
       allowCachedCredentials: true,
       entrypoint: null,
-      campaign: null,
       utmCampaign: null,
       utmContent: null,
       utmMedium: null,
@@ -79,7 +78,6 @@ define([
             // `entrypoint` (lowcase p). Normalize to `entrypoint`.
             self.importSearchParam('entryPoint', 'entrypoint');
           }
-          self.importSearchParam('campaign');
 
           self.importSearchParam('utm_campaign', 'utmCampaign');
           self.importSearchParam('utm_content', 'utmContent');

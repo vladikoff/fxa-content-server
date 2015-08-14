@@ -267,7 +267,6 @@ function (
         context: relier.get('context'),
         entrypoint: relier.get('entrypoint'),
         migration: relier.get('migration'),
-        campaign: relier.get('campaign'),
         clientHeight: screenInfo.clientHeight,
         clientWidth: screenInfo.clientWidth,
         devicePixelRatio: screenInfo.devicePixelRatio,

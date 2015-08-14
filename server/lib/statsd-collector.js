@@ -29,7 +29,6 @@ function _normalizeTag(item) {
 function getGenericTags(body) {
   // see more about tags here: http://docs.datadoghq.com/guides/metrics/
   var tags = [
-    'campaign:' + body.campaign,
     'context:' + body.context,
     'broker:' + body.broker,
     'entrypoint:' + body.entrypoint,

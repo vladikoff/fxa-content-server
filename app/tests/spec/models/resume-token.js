@@ -12,13 +12,11 @@ function (chai, ResumeToken) {
   var assert = chai.assert;
 
   var STATE = 'state';
-  var CAMPAIGN = 'campaign';
   var ENTRYPOINT = 'entrypoint';
   var VERIFICATION_REDIRECT = 'https://hello.firefox.com';
   var UNIQUE_USER_ID = 'uuid';
 
   var TOKEN_OBJ = {
-    campaign: CAMPAIGN,
     entrypoint: ENTRYPOINT,
     state: STATE,
     verificationRedirect: VERIFICATION_REDIRECT,

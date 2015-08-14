@@ -104,7 +104,6 @@ function toLoggableEvent(event) {
     'entrypoint',
     'service',
     'migration',
-    'campaign'
   ], loggableEvent, event);
 
   addNavigationTiming(loggableEvent, event);
