@@ -82,7 +82,10 @@ function (intern, topic, firefoxProfile) {
     // Functional test suite(s) to run in each browser once non-functional tests are completed
     functionalSuites: [ 'tests/functional/mocha', 'tests/functional' ],
 
-    excludeInstrumentation: true
+    excludeInstrumentation: true,
+    tunnelOptions: {
+      pathname: '/'
+    }
   };
 
   // to create a profile, give it the `config` option.
