@@ -7,30 +7,17 @@ define([
 ], function (intern) {
 
   intern.functionalSuites = [
-    'tests/functional/sign_in',
-    'tests/functional/sign_in_cached',
-    'tests/functional/sync_sign_in',
-    'tests/functional/sign_up',
-    'tests/functional/sign_up_coppa_input',
-    'tests/functional/complete_sign_up',
-    'tests/functional/sync_sign_up',
-    'tests/functional/sync_v2_sign_up',
-    'tests/functional/firstrun_sign_up',
-    'tests/functional/firstrun_sign_in',
-    'tests/functional/bounced_email',
-    'tests/functional/confirm',
-    'tests/functional/delete_account',
-    'tests/functional/reset_password',
-    'tests/functional/sync_reset_password',
-    'tests/functional/robots_txt',
-    'tests/functional/settings',
-    'tests/functional/settings_common',
-    'tests/functional/sync_settings',
-    'tests/functional/change_password',
-    'tests/functional/force_auth',
-    'tests/functional/back_button_after_start',
-    'tests/functional/cookies_disabled',
-    'tests/functional/password_visibility'
+    'tests/functional/password_visibility',
+    'tests/functional/oauth_sign_in',
+    'tests/functional/oauth_sign_up',
+    'tests/functional/oauth_sign_up_verification_redirect',
+    'tests/functional/oauth_reset_password',
+    'tests/functional/oauth_webchannel',
+    'tests/functional/oauth_webchannel_keys',
+    'tests/functional/oauth_preverified_sign_up',
+    'tests/functional/oauth_iframe',
+    'tests/functional/oauth_force_email',
+    'tests/functional/oauth_permissions'
   ];
 
   return intern;
