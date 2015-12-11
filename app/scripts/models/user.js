@@ -360,6 +360,7 @@ define(function (require, exports, module) {
       return account.fetchDevices(devices);
     },
 
+
     /**
      * Destroy a device on the given account. If the current device
      * is destroyed, sign out the user.

@@ -448,6 +448,12 @@ define(function (require, exports, module) {
         .then(devices.set.bind(devices));
     },
 
+    updateDevice: function (deviceId, deviceName, options) {
+      var sessionToken = this.get('sessionToken');
+      console.log(deviceId, deviceName, options)
+      return this._fxaClient.deviceUpdate(sessionToken, deviceId, deviceName, options)
+    },
+
     /**
      * Delete the device from the account
      *

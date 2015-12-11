@@ -1,0 +1,9 @@
+{
+  "name": "Firefox Accounts",
+  "short_name": "Firefox Accounts",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "gcm_sender_id": "1036328201509",
+  "permissions": ["gcm", "storage"],
+  "gcm_user_visible_only": true
+}

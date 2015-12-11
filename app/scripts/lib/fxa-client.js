@@ -479,6 +479,17 @@ define(function (require, exports, module) {
         });
     },
 
+    deviceUpdate: function (sessionToken, deviceId, deviceName, options) {
+
+      options = options || {}
+
+      return this._getClient()
+        .then(function (client) {
+          console.log(sessionToken, deviceId, deviceName, options)
+          return client.deviceUpdate(sessionToken, deviceId, deviceName, options);
+        });
+    },
+
     deviceDestroy: function (sessionToken, deviceId) {
       return this._getClient()
         .then(function (client) {
