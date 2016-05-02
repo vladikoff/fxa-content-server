@@ -25,6 +25,9 @@ define(function (require, exports, module) {
   var SignInMixin = require('views/mixins/signin-mixin');
   var SignInTemplate = require('stache!templates/sign_in');
   var SignUpDisabledMixin = require('views/mixins/signup-disabled-mixin');
+  var captcha = require('captcha');
+  var p = require('lib/promise')
+  var cap;
 
   var t = BaseView.t;
 
@@ -89,6 +92,22 @@ define(function (require, exports, module) {
 
     afterVisible: function () {
       FormView.prototype.afterVisible.call(this);
+
+      cap = captcha('sample-captcha', {
+        imgPath: 'images/',
+        captcha: {
+          url: 'http://127.0.0.1:8282',
+          numberOfImages: 5,
+          callbacks: {
+            loading: function( captcha ){
+              console.log( 'I am loading.', captcha );
+            },
+            loaded: function( captcha ){
+              console.log( 'I am loaded.', captcha );
+            }
+          }
+        }
+      });
       return this.displayAccountProfileImage(this.getAccount(), { spinner: true });
     },
 
@@ -118,8 +137,31 @@ define(function (require, exports, module) {
      * @private
      */
     _signIn: function (account, password) {
-      return this.signIn(account, password)
-        .fail(this.onSignInError.bind(this, account, password));
+      var self = this;
+      return p().then(function () {
+        var o = {};
+        o[$('.imageField').attr('name')] = $('.imageField')[0].value;
+
+        $.ajax({
+          url: "http://127.0.0.1:8282/try",
+          method: "POST",
+          data: o,
+          xhrFields: {
+            withCredentials: true
+          }
+        }).done(function( data ) {
+          if (data === 'ok') {
+            return self.signIn(account, password)
+              .fail(self.onSignInError.bind(this, account, password));
+          } else {
+
+          }
+        })
+          .fail(function() {
+            return self.displayError(AuthErrors.toError('Failed Captcha'));
+          })
+
+      })
     },
 
     onSignInError: function (account, password, err) {

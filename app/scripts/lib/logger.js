@@ -64,6 +64,7 @@ define(function (require, exports, module) {
      * @param {error} Error object with optional errorModule.
      */
     error: function (error) {
+      console.dir(error)
       if (this._window.console && this._window.console.error) {
         var errorMessage = '';
 

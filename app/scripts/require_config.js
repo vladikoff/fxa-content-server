@@ -50,6 +50,7 @@ require.config({
     underscore: '../bower_components/underscore/underscore',
     uuid: '../bower_components/node-uuid/uuid',
     vat: '../bower_components/vat/vat',
+    captcha: '../bower_components/visualcaptcha.vanilla/visualcaptcha.vanilla.src',
     webrtc: '../bower_components/webrtc-adapter/adapter'
   },
   shim: {
