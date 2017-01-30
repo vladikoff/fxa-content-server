@@ -14,6 +14,7 @@ define(function (require, exports, module) {
   const ConnectAnotherDeviceView = require('../views/connect_another_device');
   const CannotCreateAccountView = require('../views/cannot_create_account');
   const VerificationReasons = require('lib/verification-reasons');
+  const ChangeEmailView = require('../views/settings/change_email');
   const ChangePasswordView = require('../views/settings/change_password');
   const ChooseWhatToSyncView = require('../views/choose_what_to_sync');
   const ClearStorageView = require('../views/clear_storage');
@@ -93,6 +94,7 @@ define(function (require, exports, module) {
       'settings/avatar/crop(/)': createChildViewHandler(AvatarCropView, SettingsView),
       'settings/avatar/gravatar(/)': createChildViewHandler(AvatarGravatarView, SettingsView),
       'settings/avatar/gravatar_permissions(/)': createChildViewHandler(GravatarPermissionsView, SettingsView),
+      'settings/change_email(/)': createChildViewHandler(ChangeEmailView, SettingsView),
       'settings/change_password(/)': createChildViewHandler(ChangePasswordView, SettingsView),
       'settings/clients(/)': createChildViewHandler(ClientsView, SettingsView),
       'settings/clients/disconnect(/)': createChildViewHandler(ClientDisconnectView, SettingsView),

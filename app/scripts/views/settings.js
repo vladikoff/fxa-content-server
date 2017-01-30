@@ -13,6 +13,7 @@ define(function (require, exports, module) {
   const AvatarMixin = require('views/mixins/avatar-mixin');
   const AvatarView = require('views/settings/avatar');
   const BaseView = require('views/base');
+  const ChangeEmailView = require('views/settings/change_email');
   const ChangePasswordView = require('views/settings/change_password');
   const Cocktail = require('cocktail');
   const CommunicationPreferencesView = require('views/settings/communication_preferences');
@@ -36,6 +37,7 @@ define(function (require, exports, module) {
     ClientDisconnectView,
     DisplayNameView,
     CommunicationPreferencesView,
+    ChangeEmailView,
     ChangePasswordView,
     DeleteAccountView,
     AvatarChangeView,
